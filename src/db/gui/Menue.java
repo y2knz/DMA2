@@ -27,6 +27,10 @@ public class Menue {
 		jMenue.setSize(1280, 720);
 		jMenue.setResizable(false);
 		jMenue.setBackground(new Color(37, 40, 80));
+		
+		//Eventhandler Menue
+		
+		EventHandlerMenue ev = new EventHandlerMenue(this);
 
 		// Main Panel
 		JPanel menueMainPanel = new JPanel();
@@ -61,7 +65,7 @@ public class Menue {
 			
 		
 
-			// optionen[i].addActionListener(h);
+			 optionen[i].addActionListener(ev);
 
 			optionen[i].setBackground(Color.WHITE);
 			optionen[i].setFont(spielFont);
@@ -83,5 +87,15 @@ public class Menue {
 		jMenue.setVisible(true);
 
 	}
+
+	public JButton[] getOptionen() {
+		return optionen;
+	}
+
+	public JFrame getjMenue() {
+		return jMenue;
+	}
+
+	
 
 }
