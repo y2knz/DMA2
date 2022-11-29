@@ -14,6 +14,8 @@ public class DB {
 	public DB() {
 	}
 
+	//comment
+	
 	public DB(String db, String user, String pass) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
