@@ -8,10 +8,10 @@ public class DB {
 	private Connection con = null;
 	private int counter_prepared = 1;
 	
-	//IP Adresse an die der VM anpassen
 	private String ipAddress = "192.168.0.206:3306/buecherverleih";
 
 	public DB() {
+		//IP Adresse an die der VM anpassen
 		String url = "jdbc:mysql://192.168.0.206:3306/buecherverleih";
 		String user = "root";
 		String password = "root";
@@ -25,7 +25,7 @@ public class DB {
 
 			System.out.println("Erfolgreich mit DB verbunden.");
 			
-			
+			// BSP Abfrage Kundentabelle
 			String query = "SELECT * FROM Kunde ORDER BY Kundennummer ASC";
 			Statement stmt = myConn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
