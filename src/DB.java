@@ -12,7 +12,7 @@ public class DB {
 
 	public DB() {
 		//IP Adresse an die der VM anpassen
-		String url = "jdbc:mysql://192.168.0.206:3306/buecherverleih";
+		String url = "jdbc:mysql://192.168.2.111:3306/buecherverleih";
 		String user = "root";
 		String password = "root";
 		try{
