@@ -15,7 +15,7 @@ public class MainExperiment {
 			ArrayList<LinkedHashMap<String,String>> liste = db.lesenJava();	
 			System.out.println();
 			System.out.println(liste.get(1).get("Nachname"));
-		
+		System.out.println();
 	}
 
 }
