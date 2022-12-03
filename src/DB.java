@@ -7,18 +7,13 @@ public class DB {
 	private PreparedStatement ps = null;
 	private Connection con = null;
 	private int counter_prepared = 1;
-	
-	private String ipAddress = "192.168.0.206:3306/buecherverleih";
 
-	public DB() {
-		//IP Adresse an die der VM anpassen
-		String url = "jdbc:mysql://192.168.2.111:3306/buecherverleih";
-		String user = "root";
-		String password = "root";
+	public DB(String ipAddress) {
+		Zugangsdaten zugangsdaten = new Zugangsdaten(ipAddress);
 		try{
-			 System.out.println("Connecting to database :" +ipAddress);
-	            Connection myConn =
-	                    DriverManager.getConnection(url,user,password);
+			 System.out.println("Connecting to database :" +ipAddress + ":3306");
+	            Connection conn =
+	                    DriverManager.getConnection(zugangsdaten.getUrl(),zugangsdaten.getUser(),zugangsdaten.getPassword());
 
 	            System.out.println("Connection Successful...!");
 
@@ -27,7 +22,7 @@ public class DB {
 			
 			// BSP Abfrage Kundentabelle
 			String query = "SELECT * FROM Kunde ORDER BY Kundennummer ASC";
-			Statement stmt = myConn.createStatement();
+			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			
 			int columns = rs.getMetaData().getColumnCount();
