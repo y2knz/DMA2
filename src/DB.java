@@ -121,4 +121,31 @@ public class DB {
 		}
 		return daten;
 	}
+	
+	public void setString(String s) {
+		try {
+			ps.setString(counter_prepared++, s);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setString '"+ s + "': " + e.getMessage());
+		}
+	}
+	
+	public void setInt(String s) {
+		try {
+			setInt(Integer.parseInt(s));
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setString '"+ s + "': " + e.getMessage());
+		}
+	}
+	
+	public void setInt(int i) {
+		try {
+			ps.setInt(counter_prepared++, i);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("DB setString '"+ i + "': " + e.getMessage());
+		}
+	}
 }
