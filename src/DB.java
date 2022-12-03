@@ -150,23 +150,32 @@ public class DB {
 
 //	// Was muessen wir eigentlich alles angeben? Nur die Werte der Buch Tabelle?
 //	// Oder auch noch Autor, und dadurch Verlag..etc...
-	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
-		try {
-			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
-					+ "VALUES (?, ?, ?, ?, ?, ?);");
-			ps.setString(1, isbn);
-			ps.setString(2, titel);
-			ps.setString(3, genre);
-			ps.setString(4, verlag);
-			ps.setString(5, jahr);
-			ps.setString(6, bestand);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+//	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
+//		try {
+//			ps = con.prepareStatement("INSERT INTO Zugeordnet_zu(Buch_ISBN, Genre_ID) VALUES (?,?)");
+//			setString(isbn);
+//			setInt(genre);
+//			ps.executeUpdate();
+//			ps = null;
+//			counter_prepared = 1;
+//			
+//			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
+//					+ "VALUES (?, ?, ?, ?, ?, ?);");
+//			setString(isbn);
+//			setString(titel);
+//			setString(genre);
+//			setString(verlag);
+//			setString(jahr);
+//			setString(bestand);
+//			ps.executeUpdate();
+//			ps = null;
+//			counter_prepared = 1;
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//	
 
 	// geht nicht weil Enum....
 //		public void addGenre(String bezeichnung) {
@@ -183,4 +192,20 @@ public class DB {
 //			}
 //		}
 	 
+	
+	public void deleteBook(String titel) {
+		try {
+			ps = con.prepareStatement("DELETE FROM Buch WHERE titel=?;");
+
+			setString(titel);
+			System.out.println(ps);
+			ps.executeUpdate();
+			ps = null;
+			counter_prepared = 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+ 
 }

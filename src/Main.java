@@ -12,15 +12,15 @@ public class Main {
 //		System.out.println("DB IP-Address: ");
 //		String ipAddress = sc.next();
 		
-		String ipAddress = "192.168.0.206";
+		String ipAddress = "192.168.0.137";
 		
 		db = new DB(ipAddress);
 		//getBooks();
 		//getBooksFromAutor();
 		//getBooksFromAutor("Doyle");
 //		db.addGenre("Dystopian");
-		db.addBook("9781408855684", "Harry Potter and the half-blood prince", "1", "100", "2002", "1");
-		
+//		db.addBook("9781408855684", "Harry Potter and the half-blood prince", "1", "100", "2002", "1");
+		db.deleteBook("Norden");
 	}
 	
 	public static void getBooks() {
