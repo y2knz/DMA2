@@ -23,6 +23,9 @@ public class Main {
 
 //		db.addBook("9781408855684", "Harry Potter and the half-blood prince", "1", "100", "2002", "1");
 		db.deleteBook("Norden");
+//		db.getBooksFromAutor("Rowling");		
+		db.getBooksFromAutor("Rowling");
+
 
 		//db.addBook("9781408855684", "Harry Potter and the half-blood prince", "1", "100", "2002", "1");
 		db.close();

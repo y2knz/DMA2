@@ -231,12 +231,64 @@ public class DB {
 			setString(titel);
 			System.out.println(ps);
 			ps.executeUpdate();
-			ps = null;
+			ps.close();
 			counter_prepared = 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+//	funktioniert direkt in der DB über die Konsole mit der Query, hier nicht
+	public void getBooksFromAutor(String s) {
+		try {
+			ps = con.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel"
+					+ "FROM Buch "
+					+ "JOIN Schreibt "
+					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
+					+ "JOIN Autor "
+					+ "ON Autor.ID = Schreibt.Autor_ID "
+					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname=?);");
+			
+			setString(s);
+			System.out.println(ps);
+			ResultSet rs = ps.executeQuery();
+			System.out.println(konvertiereJava(rs));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+//		//setSQL();
+//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
+//		for(LinkedHashMap<String,String>datensatz:daten) {
+//			System.out.println(datensatz);
+//		}
+	}
+	
+	public void getBooksFromAutor() {
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "SELECT Autor.Nachname, Autor.Vorname, Buch.Titel"
+					+ "FROM Buch "
+					+ "JOIN Schreibt "
+					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
+					+ "JOIN Autor "
+					+ "ON Autor.ID = Schreibt.Autor_ID "
+					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname='Rowling');";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println(konvertiereJava(rs));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+//		//setSQL();
+//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
+//		for(LinkedHashMap<String,String>datensatz:daten) {
+//			System.out.println(datensatz);
+//		}
 	}
  
 }
