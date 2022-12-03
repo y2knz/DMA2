@@ -4,12 +4,15 @@ public class Zugangsdaten {
 	private String user = "root";
 	private String password = "root";
 	
-	public Zugangsdaten(String ipAddress){
+	public Zugangsdaten(){
+	}
+
+	public void setIP(String ipAddress) {
 		String s1 = "jdbc:mysql://";
 		String s2 = ":3306/buecherverleih";
 		this.url = s1 + ipAddress + s2;
 	}
-
+	
 	public String getUrl() {
 		return url;
 	}

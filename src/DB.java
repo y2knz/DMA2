@@ -7,50 +7,49 @@ public class DB {
 	private PreparedStatement ps = null;
 	private Connection con = null;
 	private int counter_prepared = 1;
+	Zugangsdaten zugangsdaten = null;
 
 	public DB(String ipAddress) {
-		Zugangsdaten zugangsdaten = new Zugangsdaten(ipAddress);
-		try{
-			 System.out.println("Connecting to database :" +ipAddress + ":3306");
-	            Connection conn =
-	                    DriverManager.getConnection(zugangsdaten.getUrl(),zugangsdaten.getUser(),zugangsdaten.getPassword());
+		zugangsdaten = new Zugangsdaten();
+		zugangsdaten.setIP(ipAddress);
+		try {
+			System.out.println("Connecting to database :" + ipAddress + ":3306");
+			con = DriverManager.getConnection(zugangsdaten.getUrl(), zugangsdaten.getUser(),
+					zugangsdaten.getPassword());
 
-	            System.out.println("Connection Successful...!");
-
+			System.out.println("Connection Successful...!");
 
 			System.out.println("Erfolgreich mit DB verbunden.");
-			
-			// BSP Abfrage Kundentabelle
-			String query = "SELECT * FROM Kunde ORDER BY Kundennummer ASC";
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			
-			int columns = rs.getMetaData().getColumnCount();
-			for(int i = 1; i<columns; i++) 
-				System.out.print(String.format("%-30s", rs.getMetaData().getColumnLabel(i)));
-				
-				System.out.println();
-				System.out.println("----------------------------------------------------------");
-			
-				while(rs.next()) {
-					for(int i =1; i<columns; i++) {
-						System.out.print(String.format("%-30s", rs.getString(i)));
-					}
-					System.out.println();
 
-				}
-				
-				rs.close();
-				stmt.close();
-			
-		} catch(Exception e) {
+			// BSP Abfrage Kundentabelle
+//			String query = "SELECT * FROM Kunde ORDER BY Kundennummer ASC";
+//			Statement stmt = con.createStatement();
+//			ResultSet rs = stmt.executeQuery(query);
+//			
+//			int columns = rs.getMetaData().getColumnCount();
+//			for(int i = 1; i<columns; i++) 
+//				System.out.print(String.format("%-30s", rs.getMetaData().getColumnLabel(i)));
+//				
+//				System.out.println();
+//				System.out.println("----------------------------------------------------------");
+//			
+//				while(rs.next()) {
+//					for(int i =1; i<columns; i++) {
+//						System.out.print(String.format("%-30s", rs.getString(i)));
+//					}
+//					System.out.println();
+//
+//				}
+//				
+//				rs.close();
+//				stmt.close();
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Der DB_Zugang ist nicht vorhanden!");
 		}
 	}
 
-	
-	
 //	public DB(String db, String user, String pass) {
 //			try {
 //				Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -102,7 +101,6 @@ public class DB {
 	}
 
 	public ArrayList<LinkedHashMap<String, String>> konvertiereJava(ResultSet rs) throws SQLException {
-
 		ArrayList<LinkedHashMap<String, String>> daten = new ArrayList<>();
 		int anz_spalten = rs.getMetaData().getColumnCount();
 		if (anz_spalten == 0)
@@ -121,31 +119,68 @@ public class DB {
 		}
 		return daten;
 	}
-	
+
 	public void setString(String s) {
 		try {
 			ps.setString(counter_prepared++, s);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("DB setString '"+ s + "': " + e.getMessage());
+			throw new RuntimeException("DB setString '" + s + "': " + e.getMessage());
 		}
 	}
-	
+
 	public void setInt(String s) {
 		try {
 			setInt(Integer.parseInt(s));
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("DB setString '"+ s + "': " + e.getMessage());
+			throw new RuntimeException("DB setString '" + s + "': " + e.getMessage());
 		}
 	}
-	
+
 	public void setInt(int i) {
 		try {
 			ps.setInt(counter_prepared++, i);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException("DB setString '"+ i + "': " + e.getMessage());
+			throw new RuntimeException("DB setString '" + i + "': " + e.getMessage());
 		}
 	}
+
+//	// Was muessen wir eigentlich alles angeben? Nur die Werte der Buch Tabelle?
+//	// Oder auch noch Autor, und dadurch Verlag..etc...
+	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
+		try {
+			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
+					+ "VALUES (?, ?, ?, ?, ?, ?);");
+			ps.setString(1, isbn);
+			ps.setString(2, titel);
+			ps.setString(3, genre);
+			ps.setString(4, verlag);
+			ps.setString(5, jahr);
+			ps.setString(6, bestand);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+	// geht nicht weil Enum....
+//		public void addGenre(String bezeichnung) {
+//			try {
+//				ps = con.prepareStatement("INSERT INTO Genre(ID, Bezeichnung)"
+//						+ "VALUES (?,?);");
+//				setInt(0);
+//				setString(bezeichnung);
+//				ResultSet rs = ps.executeQuery();
+//				System.out.println(konvertiereJava(rs));
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+	 
 }
