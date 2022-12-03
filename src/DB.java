@@ -150,6 +150,7 @@ public class DB {
 
 //	// Was muessen wir eigentlich alles angeben? Nur die Werte der Buch Tabelle?
 //	// Oder auch noch Autor, und dadurch Verlag..etc...
+	
 //	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
 //		try {
 //			ps = con.prepareStatement("INSERT INTO Zugeordnet_zu(Buch_ISBN, Genre_ID) VALUES (?,?)");
@@ -175,8 +176,38 @@ public class DB {
 //			e.printStackTrace();
 //		}
 //	}
-//	
 
+
+	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
+		try {
+			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
+					+ "VALUES (?, ?, ?, ?, ?, ?);");
+			ps.setString(1, isbn);
+			ps.setString(2, titel);
+			ps.setString(3, genre);
+			ps.setString(4, verlag);
+			ps.setString(5, jahr);
+			ps.setString(6, bestand);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList< LinkedHashMap<String,String>> ArrayListgetAutorBooks (String Autor) {
+		String sql1, sql2;
+		
+		sql1 = "SELECT ID FROM Autor WHERE Vorname ="+Autor;
+		sql2 = "SELECT Buch FROM Schreibt WHERE Autor IN("+sql1+"); ";
+		setSQL(sql1);
+		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
+		return daten;
+		
+		
+		
+	}
+	
 	// geht nicht weil Enum....
 //		public void addGenre(String bezeichnung) {
 //			try {
