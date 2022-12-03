@@ -195,18 +195,18 @@ public class DB {
 		}
 	}
 	
-	public ArrayList< LinkedHashMap<String,String>> ArrayListgetAutorBooks (String Autor) {
-		String sql1, sql2;
-		
-		sql1 = "SELECT ID FROM Autor WHERE Vorname ="+Autor;
-		sql2 = "SELECT Buch FROM Schreibt WHERE Autor IN("+sql1+"); ";
-		setSQL(sql1);
-		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
-		return daten;
-		
-		
-		
-	}
+//	public ArrayList< LinkedHashMap<String,String>> ArrayListgetAutorBooks (String Autor) {
+//		String sql1, sql2;
+//		
+//		sql1 = "SELECT ID FROM Autor WHERE Vorname ="+Autor;
+//		sql2 = "SELECT Buch FROM Schreibt WHERE Autor IN("+sql1+"); ";
+//		setSQL(sql1);
+//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
+//		return daten;
+//		
+//		
+//		
+//	}
 	
 	// geht nicht weil Enum....
 //		public void addGenre(String bezeichnung) {

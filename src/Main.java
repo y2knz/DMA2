@@ -15,7 +15,7 @@ public class Main {
 		String ipAddress = "192.168.0.137";
 		
 		db = new DB(ipAddress);
-		db.ArrayListgetAutorBooks("Joanne");
+//		db.ArrayListgetAutorBooks("Joanne");
 		//getBooks();
 		//getBooksFromAutor();
 		//getBooksFromAutor("Doyle");
@@ -25,7 +25,7 @@ public class Main {
 		db.deleteBook("Norden");
 
 		//db.addBook("9781408855684", "Harry Potter and the half-blood prince", "1", "100", "2002", "1");
-		
+		db.close();
 	}
 	
 	public static void getBooks() {
