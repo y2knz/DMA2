@@ -21,7 +21,6 @@ public class Main {
 		//getBooksFromAutor("Doyle");
 
 //		db.addBook("9781408855684", "Harry Potter and the half-blood prince", "1", "100", "2002", "1");
-//		db.getBooksFromAutor("Rowling");		
 //		db.getBooksFromAutor("Rowling");
 		//db.addBook("9781408855684", "Harry Potter and the half-blood prince", "1", "100", "2002", "1");
 
@@ -32,6 +31,7 @@ public class Main {
 //		db.deleteBook("Norden");
 //		db.addExemplar("9781596792500", "4 A 1530 4", "1", "2");
 //		db.deleteExemplar("9781596792500", "4 A 1530 3");
+//		db.updateKundeEmail("1", "Mustermann@mm.de");
 		
 		db.close();
 	}

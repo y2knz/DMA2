@@ -275,7 +275,7 @@ public class DB {
 					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
 					+ "JOIN Autor "
 					+ "ON Autor.ID = Schreibt.Autor_ID "
-					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname='Rowling');";
+					+ "WHERE Autor.ID IN (SELECT ID FROM Autor WHERE Nachname='Rowling');";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 			System.out.println(konvertiereJava(rs));
@@ -340,6 +340,22 @@ public class DB {
 		}
 	}
  
+	public void updateKundeEmail(String kundennr, String email) {
+		try {
+			ps = con.prepareStatement("UPDATE Kunde "
+					+ "SET E_Mail=? "
+					+ "WHERE Kundennummer=?");
+			setString(email);
+			setInt(kundennr);
+			ps.executeUpdate();
+			ps.close();
+			counter_prepared = 1;
+
+		}  catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
