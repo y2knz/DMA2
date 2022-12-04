@@ -3,13 +3,18 @@ package db.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import db.backend.DB;
+
 public class EventHandlerMenue implements ActionListener {
 
 	private Menue m;
+	
+	private DB db;
 
-	public EventHandlerMenue(Menue m) {
+	public EventHandlerMenue(Menue m,DB db) {
 
 		this.m = m;
+		this.db = db;
 
 	}
 
@@ -28,7 +33,7 @@ public class EventHandlerMenue implements ActionListener {
 		if (m.getOptionen()[1]== source) {
 			
 			m.getjMenue().dispose();
-			Delete d = new Delete();
+			Delete d = new Delete(db);
 			
 			d.getDeleteMain().setVisible(true);
 

@@ -28,7 +28,7 @@ public class EventHandlerConnect implements ActionListener {
 			db = new DB(ip);
 			
 			connect.getjConnect().dispose();
-			Menue m = new Menue();
+			Menue m = new Menue(db);
 			
 			m.getjMenue().setVisible(true);
 		}

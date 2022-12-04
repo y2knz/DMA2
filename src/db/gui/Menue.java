@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import db.backend.DB;
+
 public class Menue {
 
 	private JFrame jMenue;
@@ -20,17 +22,21 @@ public class Menue {
 
 	private JPanel option_panel = new JPanel();
 
-	public Menue() {
+	private DB db;
+
+	public Menue(DB db) {
+
+		this.db = db;
 
 		jMenue = new JFrame("Datenbank Menue");
 		jMenue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jMenue.setSize(1280, 720);
 		jMenue.setResizable(false);
 		jMenue.setBackground(new Color(37, 40, 80));
-		
-		//Eventhandler Menue
-		
-		EventHandlerMenue ev = new EventHandlerMenue(this);
+
+		// Eventhandler Menue
+
+		EventHandlerMenue ev = new EventHandlerMenue(this,db);
 
 		// Main Panel
 		JPanel menueMainPanel = new JPanel();
@@ -62,10 +68,8 @@ public class Menue {
 			optionen[i] = new JButton();
 
 			option_panel.add(optionen[i]);
-			
-		
 
-			 optionen[i].addActionListener(ev);
+			optionen[i].addActionListener(ev);
 
 			optionen[i].setBackground(Color.WHITE);
 			optionen[i].setFont(spielFont);
@@ -95,7 +99,5 @@ public class Menue {
 	public JFrame getjMenue() {
 		return jMenue;
 	}
-
-	
 
 }

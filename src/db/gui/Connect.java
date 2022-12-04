@@ -44,6 +44,12 @@ public class Connect {
 		connectMainPanel.add(ipInputLabel,BorderLayout.NORTH);
 		
 		
+		//MittelPanel
+		
+		JPanel mittelJPanel = new JPanel();
+		mittelJPanel.setSize(new Dimension(200,100));
+		
+		
 		//Eingabe
 		
 		ipAdresseField = new JTextField();
@@ -53,8 +59,15 @@ public class Connect {
 
 
 		ipAdresseField.setForeground(Color.BLACK);
+		
+		mittelJPanel.add(ipAdresseField);
 
-		connectMainPanel.add(ipAdresseField,BorderLayout.CENTER);
+		connectMainPanel.add(mittelJPanel,BorderLayout.CENTER);
+		
+		//Button Panel
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setSize(new Dimension(200,100));
+		
 		
 		
 		//Button
@@ -63,7 +76,9 @@ public class Connect {
 		
 		verbindenButton.addActionListener(ec);
 		
-		connectMainPanel.add(verbindenButton,BorderLayout.SOUTH);
+		buttonPanel.add(verbindenButton);
+		
+		connectMainPanel.add(buttonPanel,BorderLayout.SOUTH);
 		
 		jConnect.add(connectMainPanel);
 		
