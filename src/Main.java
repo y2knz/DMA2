@@ -12,7 +12,8 @@ public class Main {
 //		System.out.println("DB IP-Address: ");
 //		String ipAddress = sc.next();
 		
-		String ipAddress = "192.168.0.137";
+		//String ipAddress = "192.168.0.137";
+		String ipAddress  = "192.168.2.111";
 		
 		db = new DB(ipAddress);
 //		db.ArrayListgetAutorBooks("Joanne");
@@ -32,7 +33,10 @@ public class Main {
 //		db.addExemplar("9781596792500", "4 A 1530 4", "1", "2");
 //		db.deleteExemplar("9781596792500", "4 A 1530 3");
 //		db.updateKundeEmail("1", "Mustermann@mm.de");
-		db.getBooksFromGenre("Fantasy");
+		
+		
+//		db.getBooksFromGenre("Fantasy");
+		db.getBook("1984");
 		
 		db.close();
 	}

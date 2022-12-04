@@ -228,37 +228,7 @@ public class DB {
 //		}
 	}
 	
-	public void getBooksFromAutor() {
-		try {
-//			String sql = "SELECT Autor.Nachname, Autor.Vorname, Buch.Titel"
-//					+ "FROM Buch "
-//					+ "INNER JOIN Schreibt "
-//					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
-//					+ "INNER JOIN Autor "
-//					+ "ON Autor.ID = Schreibt.Autor_ID "
-//					+ "WHERE Autor.ID=35;";
-//			
-//			String sql = "SELECT * FROM Buch;";
-			String sql = "SELECT * FROM Autor WHERE Nachname=?;";
-			setSQL(sql);
-			setString("Austen");
-			lesenJava();
-			
-			System.out.println(lesenJava());
-			ps.close();
-			counter_prepared = 1;
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-//		//setSQL();
-//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
-//		for(LinkedHashMap<String,String>datensatz:daten) {
-//			System.out.println(datensatz);
-//		}
-	}
+	
 	
 	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
 		try {
@@ -329,6 +299,7 @@ public class DB {
 	public void getBooksFromGenre(String genre) {
 		try {
 			String sql = "SELECT * FROM Buch WHERE Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
+			
 			setSQL(sql);
 			setString(genre);
 			lesenJava();
@@ -349,6 +320,27 @@ public class DB {
 //		}
 	}
 	
+	public void getBook (String titel) {
+		
+		try {
+		String sql ="SELECT* FROM Buch WHERE Titel=?";
+		
+		setSQL(sql);
+		setString(titel);
+		lesenJava();
+		System.out.println(lesenJava());
+		
+		ps.close();
+		counter_prepared = 1;
+		
+	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		
+			
+		}
 	
 	
 	
