@@ -1,3 +1,4 @@
+package db.backend;
 
 public class Zugangsdaten {
 	private String url = null;
