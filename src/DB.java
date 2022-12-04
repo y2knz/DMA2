@@ -278,7 +278,27 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
- 
+	public void getKundeEmail(int kundennr) {
+		
+		try {
+		String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
+		setSQL(sql);
+		setInt(kundennr);
+		
+		System.out.println(lesenJava());
+		
+		ps.close();
+		counter_prepared = 1;
+		
+	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		
+	}
+	
+	
 	public void updateKundeEmail(String kundennr, String email) {
 		try {
 			ps = con.prepareStatement("UPDATE Kunde "
@@ -342,8 +362,25 @@ public class DB {
 			
 		}
 	
+	//problem Titel ist immer ein leeres Array
+	public ArrayList<LinkedHashMap<String, String>> getBooks () {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+		try {
+		String sql = "SELECT ISBN, Titel FROM Buch";
+		setSQL(sql);
+		
+		liste = lesenJava();
+		
+		ps.close();
+		counter_prepared = 1;
+		
 	
-	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		return liste;
+	}
 	
 	
 	

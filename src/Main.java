@@ -36,7 +36,12 @@ public class Main {
 		
 		
 //		db.getBooksFromGenre("Fantasy");
-		db.getBook("1984");
+//		db.getBook("1984");
+//		db.getKundeEmail(1);
+//Funktioniert ewenn man ISBN will Titel wird nicht angezeigt
+		for(LinkedHashMap<String, String> daten:db.getBooks()) {
+			System.out.println(daten);
+		}
 		
 		db.close();
 	}
