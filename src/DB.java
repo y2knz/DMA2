@@ -278,14 +278,14 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
-	public void getKundeEmail(int kundennr) {
-		
+	public ArrayList<LinkedHashMap<String, String>> getKundeEmail(int kundennr) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 		String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
 		setSQL(sql);
 		setInt(kundennr);
 		
-		System.out.println(lesenJava());
+		liste = lesenJava();
 		
 		ps.close();
 		counter_prepared = 1;
@@ -295,7 +295,7 @@ public class DB {
 		
 		e.printStackTrace();
 	}
-		
+		return liste;
 	}
 	
 	
@@ -316,15 +316,17 @@ public class DB {
 		}
 	}
 	
-	public void getBooksFromGenre(String genre) {
+	public ArrayList<LinkedHashMap<String, String>> getBooksFromGenre(String genre) {
+		
+		ArrayList<LinkedHashMap<String, String>> liste=null;
 		try {
 			String sql = "SELECT * FROM Buch WHERE Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
 			
 			setSQL(sql);
 			setString(genre);
-			lesenJava();
+			liste = lesenJava();
 			
-			System.out.println(lesenJava());
+			
 			ps.close();
 			counter_prepared = 1;
 			
@@ -332,6 +334,7 @@ public class DB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return liste;
 				
 //		//setSQL();
 //		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
@@ -341,9 +344,9 @@ public class DB {
 	}
 	
 	public void getBook (String titel) {
-		
+		//wildcard
 		try {
-		String sql ="SELECT* FROM Buch WHERE Titel=?";
+		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?%";
 		
 		setSQL(sql);
 		setString(titel);
@@ -366,7 +369,7 @@ public class DB {
 	public ArrayList<LinkedHashMap<String, String>> getBooks () {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT ISBN, Titel FROM Buch";
+		String sql = "SELECT ISBN FROM Buch";
 		setSQL(sql);
 		
 		liste = lesenJava();
@@ -381,7 +384,28 @@ public class DB {
 	}
 		return liste;
 	}
+	//nicht komplett, alles außer Auflage
+	public ArrayList<LinkedHashMap<String, String>> showExemplar(String isbn, String Signatur) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+		try {
+		String sql = "SELECT* FROM Exemplar WHERE ISBN=? AND Signatur=?";
+		
+		setSQL(sql);
+		setString(isbn);
+		setString(Signatur);
+		
+		liste = lesenJava();
+		
+		ps.close();
+		counter_prepared = 1;
+		
 	
-	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		return liste;
+		
+	}
 	
 }

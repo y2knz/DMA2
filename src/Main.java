@@ -35,13 +35,25 @@ public class Main {
 //		db.updateKundeEmail("1", "Mustermann@mm.de");
 		
 		
-//		db.getBooksFromGenre("Fantasy");
-//		db.getBook("1984");
-//		db.getKundeEmail(1);
-//Funktioniert ewenn man ISBN will Titel wird nicht angezeigt
-		for(LinkedHashMap<String, String> daten:db.getBooks()) {
-			System.out.println(daten);
-		}
+//	for(LinkedHashMap<String,String> daten: db.getBooksFromGenre("Fantasy")){
+//		System.out.println(daten);
+//	}
+	
+	db.getBook("H"); 
+	
+//		for(LinkedHashMap<String,String>daten:db.getKundeEmail(1)) {
+//			System.out.println(daten);
+//		}
+	
+	
+
+//		for(LinkedHashMap<String, String> daten:db.getBooks()) {
+//			System.out.println(daten);
+//		}
+		
+//		for(LinkedHashMap<String,String>daten:db.showExemplar("9780132382458", "9 A 7617 2")) {
+//			System.out.println(daten);
+//		}
 		
 		db.close();
 	}
