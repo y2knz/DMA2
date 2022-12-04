@@ -280,7 +280,7 @@ public class DB {
 		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?%";
 		
 		setSQL(sql);
-		setString(titel);
+		setString(titel + "%");
 		lesenJava();
 		System.out.println(lesenJava());
 		
