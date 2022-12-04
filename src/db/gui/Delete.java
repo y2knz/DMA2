@@ -1,8 +1,10 @@
 package db.gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import db.backend.DB;
@@ -14,6 +16,8 @@ public class Delete {
 	private JPanel deleteMain;
 	
 	private DB db;
+	
+	private ArrayList<JLabel> buecherLabel = new ArrayList<>();
 	
 	
 	public Delete(DB db) {
@@ -28,6 +32,17 @@ public class Delete {
 		
 		deleteMain = new JPanel();
 		deleteMain.setBackground(new Color(221, 224, 229));
+		
+		
+		//Bücher Liste
+		
+		for(int i = 0; i <db.getBooks().size();i++) {
+			
+			JLabel buch = new JLabel("");
+			
+			buecherLabel.add(buch);
+			
+		}
 		
 		
 		

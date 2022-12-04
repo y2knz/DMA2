@@ -3,6 +3,8 @@ package db.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import db.backend.DB;
 
 public class EventHandlerConnect implements ActionListener {
@@ -24,14 +26,25 @@ public class EventHandlerConnect implements ActionListener {
 		if (source == connect.getVerbindenButton()) {
 
 			String ip = connect.getIpAdresseField().getText();
+			
+			
+			try {
 
-			db = new DB(ip);
+				db = new DB(ip);
+
+				Menue m = new Menue(db);
+				
+				connect.getjConnect().dispose();
+
+				m.getjMenue().setVisible(true);
+
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null,"ungültige Eingabe");
+			}
+			}
+
 			
-			connect.getjConnect().dispose();
-			Menue m = new Menue(db);
-			
-			m.getjMenue().setVisible(true);
-		}
+		
 
 	}
 

@@ -16,7 +16,7 @@ import db.backend.Zugangsdaten;
 public class Connect {
 	
 	
-	private DB db;
+	private DB db = null;
 
 	private JFrame jConnect;
 	
