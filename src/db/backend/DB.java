@@ -26,21 +26,7 @@ public class DB {
 			throw new RuntimeException("Der DB_Zugang ist nicht vorhanden!");
 		}
 	}
-
-//	public DB(String db, String user, String pass) {
-//			try {
-//				Class.forName("com.mysql.jdbc.Driver").newInstance();
-//				String kommando =
-//						"jdbc:mysql://localhost/" + Zugangsdaten.db +
-//						"?user=" + Zugangsdaten.user +
-//						"&password=" Zugangsdaten.pass;
-//				con = DriverManager.getConnection(kommando);
-//			} catch(Exception e) {
-//				e.printStackTrace();
-//				throw new RuntimeException("Der DB_Zugang ist nicht vorhanden!");
-//			}
-//		}
-
+	
 	public void close() {
 		finalize();
 	}
@@ -84,7 +70,7 @@ public class DB {
 			return daten;
 		while (rs.next()) {
 			LinkedHashMap<String, String> datensatz = new LinkedHashMap<>();
-			for (int i = 1; i < anz_spalten; i++) {
+			for (int i = 1; i <= anz_spalten; i++) {
 				String name = rs.getMetaData().getColumnName(i);
 				String wert = rs.getString(name);
 				if (wert != null)
@@ -125,36 +111,6 @@ public class DB {
 		}
 	}
 
-//	// Was muessen wir eigentlich alles angeben? Nur die Werte der Buch Tabelle?
-//	// Oder auch noch Autor, und dadurch Verlag..etc...
-	
-//	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
-//		try {
-//			ps = con.prepareStatement("INSERT INTO Zugeordnet_zu(Buch_ISBN, Genre_ID) VALUES (?,?)");
-//			setString(isbn);
-//			setInt(genre);
-//			ps.executeUpdate();
-//			ps = null;
-//			counter_prepared = 1;
-//			
-//			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
-//					+ "VALUES (?, ?, ?, ?, ?, ?);");
-//			setString(isbn);
-//			setString(titel);
-//			setString(genre);
-//			setString(verlag);
-//			setString(jahr);
-//			setString(bestand);
-//			ps.executeUpdate();
-//			ps = null;
-//	ps.executeUpdate();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-
-
 	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
 		try {
 			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
@@ -169,23 +125,9 @@ public class DB {
 			ps.close();
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-//	public ArrayList< LinkedHashMap<String,String>> ArrayListgetAutorBooks (String Autor) {
-//		String sql1, sql2;
-//		
-//		sql1 = "SELECT ID FROM Autor WHERE Vorname ="+Autor;
-//		sql2 = "SELECT Buch FROM Schreibt WHERE Autor IN("+sql1+"); ";
-//		setSQL(sql1);
-//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
-//		return daten;
-//		
-//		
-//		
-//	}
 	
 	public void deleteBook(String titel) {
 		try {
@@ -197,17 +139,15 @@ public class DB {
 			ps.close();
 			counter_prepared = 1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-//	funktioniert direkt in der DB über die Konsole mit der Query, hier nicht
 	public void getBooksFromAutor(String s) {
 		try {
-			ps = con.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel"
-					+ "FROM Buch "
-					+ "JOIN Schreibt "
+			ps = con.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel "
+					+ "FROM Schreib "
+					+ "JOIN Buch "
 					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
 					+ "JOIN Autor "
 					+ "ON Autor.ID = Schreibt.Autor_ID "
@@ -218,15 +158,8 @@ public class DB {
 			ResultSet rs = ps.executeQuery();
 			System.out.println(konvertiereJava(rs));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-				
-//		//setSQL();
-//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
-//		for(LinkedHashMap<String,String>datensatz:daten) {
-//			System.out.println(datensatz);
-//		}
 	}
 	
 	
@@ -251,7 +184,6 @@ public class DB {
 			ps.close();
 			counter_prepared = 1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -275,7 +207,6 @@ public class DB {
 			ps.close();
 			counter_prepared = 1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -312,7 +243,6 @@ public class DB {
 			counter_prepared = 1;
 
 		}  catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -366,7 +296,6 @@ public class DB {
 			
 		}
 	
-	//problem Titel ist immer ein leeres Array
 	public ArrayList<LinkedHashMap<String, String>> getBooks () {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
@@ -385,7 +314,7 @@ public class DB {
 	}
 		return liste;
 	}
-	//nicht komplett, alles außer Auflage
+
 	public ArrayList<LinkedHashMap<String, String>> showExemplar(String isbn, String Signatur) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
