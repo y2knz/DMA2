@@ -166,6 +166,7 @@ public class DB {
 	
 	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
 		try {
+			con.setAutoCommit(false);
 			ps = con.prepareStatement("INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)"
 					+ "VALUES (?, ?, ?, ?);");
 			setString(isbn);
@@ -183,6 +184,7 @@ public class DB {
 			ps.executeUpdate();
 			ps.close();
 			counter_prepared = 1;
+			con.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -190,6 +192,7 @@ public class DB {
 	
 	public void deleteExemplar(String isbn, String signatur) {
 		try {
+			con.setAutoCommit(false);
 			ps = con.prepareStatement("DELETE FROM Exemplar "
 					+ "WHERE ISBN=? "
 					+ "AND Signatur=?;");
@@ -206,6 +209,7 @@ public class DB {
 			ps.executeUpdate();
 			ps.close();
 			counter_prepared = 1;
+			con.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
