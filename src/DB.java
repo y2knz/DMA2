@@ -230,17 +230,24 @@ public class DB {
 	
 	public void getBooksFromAutor() {
 		try {
-			Statement stmt = con.createStatement();
-			String sql = "SELECT Autor.Nachname, Autor.Vorname, Buch.Titel"
-					+ "FROM Buch "
-					+ "JOIN Schreibt "
-					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
-					+ "JOIN Autor "
-					+ "ON Autor.ID = Schreibt.Autor_ID "
-					+ "WHERE Autor.ID IN (SELECT ID FROM Autor WHERE Nachname='Rowling');";
+//			String sql = "SELECT Autor.Nachname, Autor.Vorname, Buch.Titel"
+//					+ "FROM Buch "
+//					+ "INNER JOIN Schreibt "
+//					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
+//					+ "INNER JOIN Autor "
+//					+ "ON Autor.ID = Schreibt.Autor_ID "
+//					+ "WHERE Autor.ID=35;";
+//			
+//			String sql = "SELECT * FROM Buch;";
+			String sql = "SELECT * FROM Autor WHERE Nachname=?;";
+			setSQL(sql);
+			setString("Austen");
+			lesenJava();
 			
-			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println(konvertiereJava(rs));
+			System.out.println(lesenJava());
+			ps.close();
+			counter_prepared = 1;
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -319,7 +326,28 @@ public class DB {
 		}
 	}
 	
-	
+	public void getBooksFromGenre(String genre) {
+		try {
+			String sql = "SELECT * FROM Buch WHERE Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
+			setSQL(sql);
+			setString(genre);
+			lesenJava();
+			
+			System.out.println(lesenJava());
+			ps.close();
+			counter_prepared = 1;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+//		//setSQL();
+//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
+//		for(LinkedHashMap<String,String>datensatz:daten) {
+//			System.out.println(datensatz);
+//		}
+	}
 	
 	
 	
