@@ -299,7 +299,7 @@ public class DB {
 	public ArrayList<LinkedHashMap<String, String>> getBooks () {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT ISBN FROM Buch";
+		String sql = "SELECT * FROM Buch";
 		setSQL(sql);
 		
 		liste = lesenJava();

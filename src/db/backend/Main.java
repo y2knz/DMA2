@@ -34,11 +34,11 @@ public class Main {
 //			System.out.println(daten);
 //		}
 	
-	db.getBook("1");
+//	db.getBook("1");
 
-//		for(LinkedHashMap<String, String> daten:db.getBooks()) {
-//			System.out.println(daten);
-//		}
+		for(LinkedHashMap<String, String> daten:db.getBooks()) {
+			System.out.println(daten);
+		}
 		
 //		for(LinkedHashMap<String,String>daten:db.showExemplar("9780132382458", "9 A 7617 2")) {
 //			System.out.println(daten);
