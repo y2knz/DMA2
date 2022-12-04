@@ -229,37 +229,7 @@ public class DB {
 //		}
 	}
 	
-	public void getBooksFromAutor() {
-		try {
-//			String sql = "SELECT Autor.Nachname, Autor.Vorname, Buch.Titel"
-//					+ "FROM Buch "
-//					+ "INNER JOIN Schreibt "
-//					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
-//					+ "INNER JOIN Autor "
-//					+ "ON Autor.ID = Schreibt.Autor_ID "
-//					+ "WHERE Autor.ID=35;";
-//			
-//			String sql = "SELECT * FROM Buch;";
-			String sql = "SELECT * FROM Autor WHERE Nachname=?;";
-			setSQL(sql);
-			setString("Austen");
-			lesenJava();
-			
-			System.out.println(lesenJava());
-			ps.close();
-			counter_prepared = 1;
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-				
-//		//setSQL();
-//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
-//		for(LinkedHashMap<String,String>datensatz:daten) {
-//			System.out.println(datensatz);
-//		}
-	}
+	
 	
 	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
 		try {
@@ -309,7 +279,27 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
- 
+	public ArrayList<LinkedHashMap<String, String>> getKundeEmail(int kundennr) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+		try {
+		String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
+		setSQL(sql);
+		setInt(kundennr);
+		
+		liste = lesenJava();
+		
+		ps.close();
+		counter_prepared = 1;
+		
+	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		return liste;
+	}
+	
+	
 	public void updateKundeEmail(String kundennr, String email) {
 		try {
 			ps = con.prepareStatement("UPDATE Kunde "
@@ -327,14 +317,17 @@ public class DB {
 		}
 	}
 	
-	public void getBooksFromGenre(String genre) {
+	public ArrayList<LinkedHashMap<String, String>> getBooksFromGenre(String genre) {
+		
+		ArrayList<LinkedHashMap<String, String>> liste=null;
 		try {
 			String sql = "SELECT * FROM Buch WHERE Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
+			
 			setSQL(sql);
 			setString(genre);
-			lesenJava();
+			liste = lesenJava();
 			
-			System.out.println(lesenJava());
+			
 			ps.close();
 			counter_prepared = 1;
 			
@@ -342,6 +335,7 @@ public class DB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return liste;
 				
 //		//setSQL();
 //		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
@@ -350,10 +344,69 @@ public class DB {
 //		}
 	}
 	
+	public void getBook (String titel) {
+		//wildcard
+		try {
+		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?%";
+		
+		setSQL(sql);
+		setString(titel);
+		lesenJava();
+		System.out.println(lesenJava());
+		
+		ps.close();
+		counter_prepared = 1;
+		
 	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		
+			
+		}
 	
+	//problem Titel ist immer ein leeres Array
+	public ArrayList<LinkedHashMap<String, String>> getBooks () {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+		try {
+		String sql = "SELECT ISBN FROM Buch";
+		setSQL(sql);
+		
+		liste = lesenJava();
+		
+		ps.close();
+		counter_prepared = 1;
+		
 	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		return liste;
+	}
+	//nicht komplett, alles außer Auflage
+	public ArrayList<LinkedHashMap<String, String>> showExemplar(String isbn, String Signatur) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+		try {
+		String sql = "SELECT* FROM Exemplar WHERE ISBN=? AND Signatur=?";
+		
+		setSQL(sql);
+		setString(isbn);
+		setString(Signatur);
+		
+		liste = lesenJava();
+		
+		ps.close();
+		counter_prepared = 1;
+		
 	
-	
+	} catch (SQLException e) {
+		
+		e.printStackTrace();
+	}
+		return liste;
+		
+	}
 	
 }
