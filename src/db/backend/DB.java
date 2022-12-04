@@ -277,7 +277,7 @@ public class DB {
 	public void getBook (String titel) {
 		//wildcard
 		try {
-		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?%";
+		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?";
 		
 		setSQL(sql);
 		setString(titel + "%");
