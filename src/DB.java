@@ -290,5 +290,63 @@ public class DB {
 //			System.out.println(datensatz);
 //		}
 	}
+	
+	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
+		try {
+			ps = con.prepareStatement("INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)"
+					+ "VALUES (?, ?, ?, ?);");
+			setString(isbn);
+			setString(signatur);
+			setInt(sprache);
+			setInt(auflage);
+			ps.executeUpdate();
+			ps.close();
+			counter_prepared = 1;
+			
+			ps = con.prepareStatement("UPDATE Buch "
+					+ "SET Bestand =Bestand+1 "
+					+ "WHERE ISBN=?");
+			setString(isbn);
+			ps.executeUpdate();
+			ps.close();
+			counter_prepared = 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteExemplar(String isbn, String signatur) {
+		try {
+			ps = con.prepareStatement("DELETE FROM Exemplar "
+					+ "WHERE ISBN=? "
+					+ "AND Signatur=?;");
+			setString(isbn);
+			setString(signatur);
+			ps.executeUpdate();
+			ps.close();
+			counter_prepared = 1;
+			
+			ps = con.prepareStatement("UPDATE Buch "
+					+ "SET Bestand =Bestand-1 "
+					+ "WHERE ISBN=?");
+			setString(isbn);
+			ps.executeUpdate();
+			ps.close();
+			counter_prepared = 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
  
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
