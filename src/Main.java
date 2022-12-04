@@ -36,29 +36,6 @@ public class Main {
 		db.close();
 	}
 	
-	public static void getBooks() {
-		db.setSQL("SELECT * FROM Buch;");
-		ArrayList<LinkedHashMap<String,String>> daten = db.lesenJava();
-		for(LinkedHashMap<String,String>datensatz:daten) {
-			System.out.println(datensatz);
-		}
-	}
 	
-	//funktioniert noch nicht...
-	public static void getBooksFromAutor(String autor) {
-		String sql1, sql2, sql3;
-		sql1 = "SELECT ID FROM Autor"
-				+ "WHERE Nachname=" + autor;
-		sql2 = "SELECT Buch_ISBN FROM Schreibt "
-				+ "WHERE Autor_ID IN ("+ sql1 +");";
-		sql3 = "SELECT * FROM Buch"
-				+ "WHERE ISBN IN (" +sql2 + ");";
-				
-		db.setSQL(sql3);
-		ArrayList<LinkedHashMap<String,String>> daten = db.lesenJava();
-		for(LinkedHashMap<String,String>datensatz:daten) {
-			System.out.println(datensatz);
-		}
-	}
 
 }

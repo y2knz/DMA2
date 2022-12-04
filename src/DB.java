@@ -20,30 +20,6 @@ public class DB {
 			System.out.println("Connection Successful...!");
 
 			System.out.println("Erfolgreich mit DB verbunden.");
-
-			// BSP Abfrage Kundentabelle
-//			String query = "SELECT * FROM Kunde ORDER BY Kundennummer ASC";
-//			Statement stmt = con.createStatement();
-//			ResultSet rs = stmt.executeQuery(query);
-//			
-//			int columns = rs.getMetaData().getColumnCount();
-//			for(int i = 1; i<columns; i++) 
-//				System.out.print(String.format("%-30s", rs.getMetaData().getColumnLabel(i)));
-//				
-//				System.out.println();
-//				System.out.println("----------------------------------------------------------");
-//			
-//				while(rs.next()) {
-//					for(int i =1; i<columns; i++) {
-//						System.out.print(String.format("%-30s", rs.getString(i)));
-//					}
-//					System.out.println();
-//
-//				}
-//				
-//				rs.close();
-//				stmt.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("Der DB_Zugang ist nicht vorhanden!");
@@ -170,7 +146,7 @@ public class DB {
 //			setString(bestand);
 //			ps.executeUpdate();
 //			ps = null;
-//			counter_prepared = 1;
+//	ps.executeUpdate();
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -182,12 +158,14 @@ public class DB {
 		try {
 			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
 					+ "VALUES (?, ?, ?, ?, ?, ?);");
-			ps.setString(1, isbn);
-			ps.setString(2, titel);
-			ps.setString(3, genre);
-			ps.setString(4, verlag);
-			ps.setString(5, jahr);
-			ps.setString(6, bestand);
+			setString(isbn);
+			setString(titel);
+			setString(genre);
+			setString(verlag);
+			setString(jahr);
+			setString(bestand);
+			ps.executeUpdate();
+			ps.close();
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -207,22 +185,6 @@ public class DB {
 //		
 //		
 //	}
-	
-	// geht nicht weil Enum....
-//		public void addGenre(String bezeichnung) {
-//			try {
-//				ps = con.prepareStatement("INSERT INTO Genre(ID, Bezeichnung)"
-//						+ "VALUES (?,?);");
-//				setInt(0);
-//				setString(bezeichnung);
-//				ResultSet rs = ps.executeQuery();
-//				System.out.println(konvertiereJava(rs));
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-	 
 	
 	public void deleteBook(String titel) {
 		try {
