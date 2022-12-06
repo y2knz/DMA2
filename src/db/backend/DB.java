@@ -15,8 +15,8 @@ public class DB {
 		zugangsdaten.setIP(ipAddress);
 		try {
 			System.out.println("Connecting to database :" + ipAddress + ":3306");
-			con = DriverManager.getConnection(zugangsdaten.getUrl(), zugangsdaten.getUser(),
-					zugangsdaten.getPassword());
+			con = DriverManager.getConnection(zugangsdaten.getUrl(), zugangsdaten.getBenutzer(),
+					zugangsdaten.getPasswort());
 
 			System.out.println("Connection Successful...!");
 
@@ -111,7 +111,7 @@ public class DB {
 		}
 	}
 
-	public void addBook(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
+	public void addBuch(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
 		try {
 			ps = con.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
 					+ "VALUES (?, ?, ?, ?, ?, ?);");
@@ -129,7 +129,7 @@ public class DB {
 		}
 	}
 	
-	public void deleteBook(String titel) {
+	public void deleteBuch(String titel) {
 		try {
 			ps = con.prepareStatement("DELETE FROM Buch WHERE titel=?;");
 
@@ -143,7 +143,7 @@ public class DB {
 		}
 	}
 	
-	public void getBooksFromAutor(String s) {
+	public void getBuecherVonAutor(String s) {
 		try {
 			ps = con.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel "
 					+ "FROM Schreib "
@@ -251,7 +251,7 @@ public class DB {
 		}
 	}
 	
-	public ArrayList<LinkedHashMap<String, String>> getBooksFromGenre(String genre) {
+	public ArrayList<LinkedHashMap<String, String>> getBuecherVonGenre(String genre) {
 		
 		ArrayList<LinkedHashMap<String, String>> liste=null;
 		try {
@@ -278,7 +278,7 @@ public class DB {
 //		}
 	}
 	
-	public void getBook (String titel) {
+	public void getBuch (String titel) {
 		//wildcard
 		try {
 		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?";
@@ -300,7 +300,7 @@ public class DB {
 			
 		}
 	
-	public ArrayList<LinkedHashMap<String, String>> getBooks () {
+	public ArrayList<LinkedHashMap<String, String>> getBuecher () {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 		String sql = "SELECT * FROM Buch";
