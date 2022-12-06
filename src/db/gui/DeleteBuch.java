@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -25,6 +26,8 @@ public class DeleteBuch {
 	private JPanel deleteMain;
 
 	private DB db;
+	
+	private ScrollPane buecherScrollPane;
 	
 	private JTextField loeschenInputField;
 
@@ -99,9 +102,7 @@ public class DeleteBuch {
 
 		// Center Panel
 
-		ScrollPane buecherScrollPane = new ScrollPane();
-		buecherScrollPane.setPreferredSize(new Dimension(900, 600));
-		buecherScrollPane.setVisible(true);
+		
 
 		JPanel buecherPanel = new JPanel();
 
@@ -127,7 +128,11 @@ public class DeleteBuch {
 			buecherPanel.add(buecherLabel.get(i));
 
 		}
+	     buecherScrollPane = new ScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		buecherScrollPane.setPreferredSize(new Dimension(900, 600));
+//		buecherScrollPane.setVisible(true);
 		buecherScrollPane.add(buecherPanel);
+		
 
 		// Methode
 		buecherAnzeigen();
