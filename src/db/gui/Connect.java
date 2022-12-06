@@ -14,76 +14,68 @@ import db.backend.DB;
 import db.backend.Zugangsdaten;
 
 public class Connect {
-	
-	
+
 	private DB db = null;
 
 	private JFrame jConnect;
-	
+
 	private JTextField ipAdresseField;
-	
+
 	private JButton verbindenButton;
 
 	public Connect() {
-		EventHandlerConnect ec = new EventHandlerConnect(this,db);
+		EventHandlerConnect ec = new EventHandlerConnect(this, db);
 		jConnect = new JFrame("Datenbank Menue");
 		jConnect.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jConnect.setSize(1280, 720);
 		jConnect.setResizable(false);
 		jConnect.setBackground(new Color(37, 40, 80));
-		
-		
+
 		JPanel connectMainPanel = new JPanel();
 		connectMainPanel.setBackground(new Color(221, 224, 229));
 		connectMainPanel.setLayout(new BorderLayout());
-		
-	//Anzeige
-		
+
+		// Anzeige
+
 		JLabel ipInputLabel = new JLabel("Ip eingeben: ");
-		
-		connectMainPanel.add(ipInputLabel,BorderLayout.NORTH);
-		
-		
-		//MittelPanel
-		
+
+		connectMainPanel.add(ipInputLabel, BorderLayout.NORTH);
+
+		// MittelPanel
+
 		JPanel mittelJPanel = new JPanel();
-		mittelJPanel.setSize(new Dimension(200,100));
-		
-		
-		//Eingabe
-		
+		mittelJPanel.setSize(new Dimension(200, 100));
+
+		// Eingabe
+
 		ipAdresseField = new JTextField();
-		
 
 		ipAdresseField.setPreferredSize(new Dimension(380, 50));
 
-
 		ipAdresseField.setForeground(Color.BLACK);
-		
+
 		mittelJPanel.add(ipAdresseField);
 
-		connectMainPanel.add(mittelJPanel,BorderLayout.CENTER);
-		
-		//Button Panel
+		connectMainPanel.add(mittelJPanel, BorderLayout.CENTER);
+
+		// Button Panel
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setSize(new Dimension(200,100));
-		
-		
-		
-		//Button
-		
+		buttonPanel.setSize(new Dimension(200, 100));
+
+		// Button
+
 		verbindenButton = new JButton("Verbinden");
-		
+
 		verbindenButton.addActionListener(ec);
-		
+
 		buttonPanel.add(verbindenButton);
-		
-		connectMainPanel.add(buttonPanel,BorderLayout.SOUTH);
-		
+
+		connectMainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
 		jConnect.add(connectMainPanel);
-		
+
 		jConnect.setVisible(true);
-		
+
 	}
 
 	public JFrame getjConnect() {

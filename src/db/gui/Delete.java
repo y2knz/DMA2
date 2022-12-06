@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,10 +23,14 @@ public class Delete {
 	
 	private DB db;
 	
+	private JButton menueButton;
+	
 	private ArrayList<JLabel> buecherLabel = new ArrayList<>();
 	
 	
 	public Delete(DB db) {
+		
+		EventHandlerDelete ed = new EventHandlerDelete(this, db);
 		
 		this.db = db;
 		jDelete = new JFrame("Datenbank Delete");
@@ -40,6 +46,10 @@ public class Delete {
 		
 		//
 		
+		ScrollPane buecherScrollPanel = new ScrollPane();
+		
+
+		
 		JPanel buecherPanel = new JPanel();
 		
 		GridLayout buecherLayout = new GridLayout(0,1);
@@ -47,6 +57,7 @@ public class Delete {
 		buecherPanel.setLayout(buecherLayout);
 		
 		buecherPanel.setPreferredSize(new Dimension(800,600));
+		
 		
 		
 		//Bücher Liste
@@ -59,6 +70,9 @@ public class Delete {
 			buecherPanel.add(buecherLabel.get(i));
 			
 		}
+		buecherScrollPanel.add(buecherPanel);
+		
+		
 		
 		//Methode
 		buecherAnzeigen();
@@ -66,8 +80,32 @@ public class Delete {
 		
 		
 		
-		deleteMain.add(buecherPanel,BorderLayout.CENTER);
+		deleteMain.add(buecherScrollPanel,BorderLayout.CENTER);
 		
+		
+		//NorthPanel
+		
+		JPanel northPanel  =new JPanel();
+		northPanel.setPreferredSize(new Dimension(1280,50));
+		northPanel.setOpaque(true);
+		
+		//Filler Panel
+		
+		JPanel northFillerPanel = new JPanel();
+		northFillerPanel.setPreferredSize(new Dimension(1000,50));
+		northFillerPanel.setOpaque(true);
+		northPanel.add(northFillerPanel);
+		
+		//Menu Button
+		
+		menueButton = new JButton("Menü");
+		menueButton.setPreferredSize(new Dimension(140,50));
+		menueButton.addActionListener(ed);
+		
+		northPanel.add(menueButton);
+		
+		
+		deleteMain.add(northPanel,BorderLayout.NORTH);
 		jDelete.add(deleteMain);
 		jDelete.setVisible(true);
 	}
@@ -78,6 +116,18 @@ public class Delete {
 		return deleteMain;
 	}
 	
+	public JFrame getjDelete() {
+		return jDelete;
+	}
+
+
+
+	public JButton getMenueButton() {
+		return menueButton;
+	}
+
+
+
 	public void buecherAnzeigen() {
 		
 		
