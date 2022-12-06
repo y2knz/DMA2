@@ -11,7 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import db.backend.DB;
+import db.backend.DB_Buecherverleih;
+import db.backend.DB_Zugriff;
 
 public class CreateBuch {
 
@@ -19,7 +20,7 @@ public class CreateBuch {
 
 	private JPanel createMain;
 
-	private DB db;
+	private DB_Buecherverleih db;
 
 	private JButton menueButton;
 	
@@ -32,7 +33,7 @@ public class CreateBuch {
 	private JLabel[] beschriftungen = new JLabel[6];
 
 
-	public CreateBuch(DB db) {
+	public CreateBuch(DB_Buecherverleih db) {
 
 		EventHandlerCreate ed = new EventHandlerCreate(this, db);
 

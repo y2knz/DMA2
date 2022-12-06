@@ -10,12 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import db.backend.DB;
+import db.backend.DB_Buecherverleih;
+import db.backend.DB_Zugriff;
 import db.backend.Zugangsdaten;
 
 public class Connect {
 
-	private DB db = null;
+	private DB_Buecherverleih db = null;
 
 	private JFrame jConnect;
 
