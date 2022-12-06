@@ -10,7 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import db.backend.DB;
+import db.backend.DB_Buecherverleih;
+import db.backend.DB_Zugriff;
 
 public class Menue {
 
@@ -22,9 +23,9 @@ public class Menue {
 
 	private JPanel option_panel = new JPanel();
 
-	private DB db;
+	private DB_Buecherverleih db;
 
-	public Menue(DB db) {
+	public Menue(DB_Buecherverleih db) {
 
 		this.db = db;
 

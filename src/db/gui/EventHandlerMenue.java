@@ -3,15 +3,16 @@ package db.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import db.backend.DB;
+import db.backend.DB_Buecherverleih;
+import db.backend.DB_Zugriff;
 
 public class EventHandlerMenue implements ActionListener {
 
 	private Menue m;
 	
-	private DB db;
+	private DB_Buecherverleih db;
 
-	public EventHandlerMenue(Menue m,DB db) {
+	public EventHandlerMenue(Menue m,DB_Buecherverleih db) {
 
 		this.m = m;
 		this.db = db;

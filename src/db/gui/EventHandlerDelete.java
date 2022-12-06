@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import db.backend.DB;
+import db.backend.DB_Buecherverleih;
 
 public class EventHandlerDelete implements ActionListener{
 	
 	private DeleteBuch d;
 	
-	private DB db;
+	private DB_Buecherverleih db;
 	
-	public  EventHandlerDelete(DeleteBuch d, DB db) {
+	public  EventHandlerDelete(DeleteBuch d, DB_Buecherverleih db) {
 		this.d = d;
 		this.db = db;
 	}

@@ -5,15 +5,16 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import db.backend.DB;
+import db.backend.DB_Buecherverleih;
+import db.backend.DB_Zugriff;
 
 public class EventHandlerConnect implements ActionListener {
 
 	Connect connect;
 
-	DB db;
+	DB_Buecherverleih db;
 
-	public EventHandlerConnect(Connect connect, DB db) {
+	public EventHandlerConnect(Connect connect, DB_Buecherverleih db) {
 		this.connect = connect;
 
 		this.db = db;
@@ -30,7 +31,7 @@ public class EventHandlerConnect implements ActionListener {
 			
 			try {
 
-				db = new DB(ip);
+				db = new DB_Buecherverleih(new DB_Zugriff(ip));
 
 				Menue m = new Menue(db);
 				

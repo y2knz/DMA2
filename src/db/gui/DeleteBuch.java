@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-import db.backend.DB;
+import db.backend.DB_Buecherverleih;
 
 public class DeleteBuch {
 
@@ -24,7 +24,7 @@ public class DeleteBuch {
 
 	private JPanel deleteMain;
 
-	private DB db;
+	private DB_Buecherverleih db;
 	
 	private JTextField loeschenInputField;
 
@@ -34,7 +34,7 @@ public class DeleteBuch {
 
 	private ArrayList<JLabel> buecherLabel = new ArrayList<>();
 
-	public DeleteBuch(DB db) {
+	public DeleteBuch(DB_Buecherverleih db) {
 
 		EventHandlerDelete ed = new EventHandlerDelete(this, db);
 

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	static DB db = null;
+	static DB_Buecherverleih db = null;
 	
 	public static void main(String[] args) {
 		//Scanner sc = new Scanner(System.in);
