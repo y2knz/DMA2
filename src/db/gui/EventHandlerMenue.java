@@ -26,7 +26,8 @@ public class EventHandlerMenue implements ActionListener {
 		
 		//Add
 		if (m.getOptionen()[0]== source) {
-
+			m.getjMenue().dispose();
+			CreateBuch createBuch = new CreateBuch(db);
 		}
 		
 		//Delete
