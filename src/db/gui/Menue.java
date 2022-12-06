@@ -79,9 +79,9 @@ public class Menue {
 		}
 		optionen[0].setText("Buch anlegen");
 		optionen[1].setText("Buch löschen");
-		optionen[2].setText("Bestand Buch erhöhen");
+		optionen[2].setText("Bestand Buch ändern");
 		optionen[3].setText("Zeige alle Bücher von Autor");
-		optionen[4].setText("Zeige alle Autoren eines Verlags");
+		optionen[4].setText("Zeige alle Bücher eines Genres");
 		optionen[5].setText("Credits");
 		centerMenuePanel.add(option_panel);
 

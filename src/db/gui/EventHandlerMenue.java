@@ -29,6 +29,7 @@ public class EventHandlerMenue implements ActionListener {
 		if (m.getOptionen()[0]== source) {
 			m.getjMenue().dispose();
 			CreateBuch createBuch = new CreateBuch(db);
+			createBuch.getjCreate().setVisible(true);
 		}
 		
 		//Delete
@@ -42,6 +43,9 @@ public class EventHandlerMenue implements ActionListener {
 		}if (m.getOptionen()[2]== source) {
 
 		}if (m.getOptionen()[3]== source) {
+			m.getjMenue().dispose();
+			ReadBuecherAutor rba = new ReadBuecherAutor(db);
+			rba.getbAutorFrame().setVisible(true);
 
 		}if (m.getOptionen()[4]== source) {
 
