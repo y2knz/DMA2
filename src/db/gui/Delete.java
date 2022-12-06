@@ -62,7 +62,7 @@ public class Delete {
 		
 		//Bücher Liste
 		
-		for(int i = 0; i <db.getBooks().size();i++) {
+		for(int i = 0; i <db.getBuecher().size();i++) {
 			
 			JLabel buch = new JLabel("");
 			
@@ -132,11 +132,11 @@ public class Delete {
 		
 		
 		
-		for(int i = 0; i < db.getBooks().size();i++) {
+		for(int i = 0; i < db.getBuecher().size();i++) {
 			
 			String infos = "";
 			
-			LinkedHashMap<String, String>buch = db.getBooks().get(i);
+			LinkedHashMap<String, String>buch = db.getBuecher().get(i);
 			
 			System.out.println();
 			
