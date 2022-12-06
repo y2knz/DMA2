@@ -1,4 +1,5 @@
 package db.backend;
+
 import java.sql.*;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class DB {
 			throw new RuntimeException("Der DB_Zugang ist nicht vorhanden!");
 		}
 	}
-	
+
 	public void close() {
 		finalize();
 	}
@@ -128,7 +129,7 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteBuch(String titel) {
 		try {
 			ps = con.prepareStatement("DELETE FROM Buch WHERE titel=?;");
@@ -142,17 +143,13 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void getBuecherVonAutor(String s) {
 		try {
-			ps = con.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel "
-					+ "FROM Schreib "
-					+ "JOIN Buch "
-					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
-					+ "JOIN Autor "
-					+ "ON Autor.ID = Schreibt.Autor_ID "
-					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname=?);");
-			
+			ps = con.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel " + "FROM Schreib "
+					+ "JOIN Buch " + "ON Buch.ISBN = Schreibt.Buch_ISBN " + "JOIN Autor "
+					+ "ON Autor.ID = Schreibt.Autor_ID " + "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname=?);");
+
 			setString(s);
 			System.out.println(ps);
 			ResultSet rs = ps.executeQuery();
@@ -161,14 +158,12 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
 		try {
 			con.setAutoCommit(false);
-			ps = con.prepareStatement("INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)"
-					+ "VALUES (?, ?, ?, ?);");
+			ps = con.prepareStatement(
+					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" + "VALUES (?, ?, ?, ?);");
 			setString(isbn);
 			setString(signatur);
 			setInt(sprache);
@@ -176,10 +171,8 @@ public class DB {
 			ps.executeUpdate();
 			ps.close();
 			counter_prepared = 1;
-			
-			ps = con.prepareStatement("UPDATE Buch "
-					+ "SET Bestand =Bestand+1 "
-					+ "WHERE ISBN=?");
+
+			ps = con.prepareStatement("UPDATE Buch " + "SET Bestand =Bestand+1 " + "WHERE ISBN=?");
 			setString(isbn);
 			ps.executeUpdate();
 			ps.close();
@@ -189,22 +182,18 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteExemplar(String isbn, String signatur) {
 		try {
 			con.setAutoCommit(false);
-			ps = con.prepareStatement("DELETE FROM Exemplar "
-					+ "WHERE ISBN=? "
-					+ "AND Signatur=?;");
+			ps = con.prepareStatement("DELETE FROM Exemplar " + "WHERE ISBN=? " + "AND Signatur=?;");
 			setString(isbn);
 			setString(signatur);
 			ps.executeUpdate();
 			ps.close();
 			counter_prepared = 1;
-			
-			ps = con.prepareStatement("UPDATE Buch "
-					+ "SET Bestand =Bestand-1 "
-					+ "WHERE ISBN=?");
+
+			ps = con.prepareStatement("UPDATE Buch " + "SET Bestand =Bestand-1 " + "WHERE ISBN=?");
 			setString(isbn);
 			ps.executeUpdate();
 			ps.close();
@@ -214,132 +203,124 @@ public class DB {
 			e.printStackTrace();
 		}
 	}
+
 	public ArrayList<LinkedHashMap<String, String>> getKundeEmail(int kundennr) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
-		setSQL(sql);
-		setInt(kundennr);
-		
-		liste = lesenJava();
-		
-		ps.close();
-		counter_prepared = 1;
-		
-	
-	} catch (SQLException e) {
-		
-		e.printStackTrace();
-	}
+			String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
+			setSQL(sql);
+			setInt(kundennr);
+
+			liste = lesenJava();
+
+			ps.close();
+			counter_prepared = 1;
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 		return liste;
 	}
-	
-	
+
 	public void updateKundeEmail(String kundennr, String email) {
 		try {
-			ps = con.prepareStatement("UPDATE Kunde "
-					+ "SET E_Mail=? "
-					+ "WHERE Kundennummer=?");
+			ps = con.prepareStatement("UPDATE Kunde " + "SET E_Mail=? " + "WHERE Kundennummer=?");
 			setString(email);
 			setInt(kundennr);
 			ps.executeUpdate();
 			ps.close();
 			counter_prepared = 1;
 
-		}  catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<LinkedHashMap<String, String>> getBuecherVonGenre(String genre) {
-		
-		ArrayList<LinkedHashMap<String, String>> liste=null;
+
+		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 			String sql = "SELECT * FROM Buch WHERE Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
-			
+
 			setSQL(sql);
 			setString(genre);
 			liste = lesenJava();
-			
-			
+
 			ps.close();
 			counter_prepared = 1;
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return liste;
-				
+
 //		//setSQL();
 //		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
 //		for(LinkedHashMap<String,String>datensatz:daten) {
 //			System.out.println(datensatz);
 //		}
 	}
-	
-	public void getBuch (String titel) {
-		//wildcard
+
+	public void getBuch(String titel) {
+		// wildcard
 		try {
-		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?";
-		
-		setSQL(sql);
-		setString(titel + "%");
-		lesenJava();
-		System.out.println(lesenJava());
-		
-		ps.close();
-		counter_prepared = 1;
-		
-	
-	} catch (SQLException e) {
-		
-		e.printStackTrace();
-	}
-		
-			
+			String sql = "SELECT* FROM Buch WHERE Titel LIKE ?";
+
+			setSQL(sql);
+			setString(titel + "%");
+			lesenJava();
+			System.out.println(lesenJava());
+
+			ps.close();
+			counter_prepared = 1;
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
 		}
-	
-	public ArrayList<LinkedHashMap<String, String>> getBuecher () {
+
+	}
+
+	public ArrayList<LinkedHashMap<String, String>> getBuecher() {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT * FROM Buch";
-		setSQL(sql);
-		
-		liste = lesenJava();
-		
-		ps.close();
-		counter_prepared = 1;
-		
-	
-	} catch (SQLException e) {
-		
-		e.printStackTrace();
-	}
+			String sql = "SELECT * FROM Buch";
+			setSQL(sql);
+
+			liste = lesenJava();
+
+			ps.close();
+			counter_prepared = 1;
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 		return liste;
 	}
 
 	public ArrayList<LinkedHashMap<String, String>> showExemplar(String isbn, String Signatur) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT* FROM Exemplar WHERE ISBN=? AND Signatur=?";
-		
-		setSQL(sql);
-		setString(isbn);
-		setString(Signatur);
-		
-		liste = lesenJava();
-		
-		ps.close();
-		counter_prepared = 1;
-		
-	
-	} catch (SQLException e) {
-		
-		e.printStackTrace();
-	}
+			String sql = "SELECT* FROM Exemplar WHERE ISBN=? AND Signatur=?";
+
+			setSQL(sql);
+			setString(isbn);
+			setString(Signatur);
+
+			liste = lesenJava();
+
+			ps.close();
+			counter_prepared = 1;
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 		return liste;
-		
+
 	}
-	
+
 }
