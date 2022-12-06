@@ -7,7 +7,9 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import db.backend.DB;
 
@@ -20,6 +22,15 @@ public class CreateBuch {
 	private DB db;
 
 	private JButton menueButton;
+	
+	private JTextField eingabeISBN = new JTextField(13);
+	private JTextField eingabeTitel = new JTextField(50);
+	private JTextField eingabeGenreID = new JTextField(5);
+	private JTextField eingabeVerlagID = new JTextField(5);
+	private JTextField eingabeErscheinungsjahr = new JTextField(4);
+	private JTextField eingabeBestand = new JTextField(5);
+	private JLabel[] beschriftungen = new JLabel[6];
+
 
 	public CreateBuch(DB db) {
 
@@ -38,13 +49,13 @@ public class CreateBuch {
 
 		//
 
-		JPanel buecherPanel = new JPanel();
+		GridLayout eingabeLayout = new GridLayout(6, 2);
+		
+		JPanel eingabePanel = new JPanel();
 
-		GridLayout buecherLayout = new GridLayout(0, 1);
+		eingabePanel.setLayout(eingabeLayout);
 
-		buecherPanel.setLayout(buecherLayout);
-
-		buecherPanel.setPreferredSize(new Dimension(800, 600));
+		eingabePanel.setPreferredSize(new Dimension(800, 200));
 
 
 		// NorthPanel
@@ -59,7 +70,7 @@ public class CreateBuch {
 		northFillerPanel.setPreferredSize(new Dimension(1000, 50));
 		northFillerPanel.setOpaque(true);
 		northPanel.add(northFillerPanel);
-
+		
 		// Menu Button
 
 		menueButton = new JButton("Menü");
@@ -69,8 +80,24 @@ public class CreateBuch {
 		northPanel.add(menueButton);
 
 		createMain.add(northPanel, BorderLayout.NORTH);
+		createMain.add(eingabePanel, BorderLayout.WEST);
 		jCreate.add(createMain);
 		jCreate.setVisible(true);
+		
+		// Eingabefelder
+		
+		eingabePanel.add(beschriftungen[0] = new JLabel("ISBN:"));
+		eingabePanel.add(eingabeISBN);
+		eingabePanel.add(beschriftungen[0] = new JLabel("Titel:"));
+		eingabePanel.add(eingabeTitel);
+		eingabePanel.add(beschriftungen[0] = new JLabel("GenreID:"));
+		eingabePanel.add(eingabeGenreID);
+		eingabePanel.add(beschriftungen[0] = new JLabel("VerlagID:"));
+		eingabePanel.add(eingabeVerlagID);
+		eingabePanel.add(beschriftungen[0] = new JLabel("Erscheinungsjahr:"));
+		eingabePanel.add(eingabeErscheinungsjahr);
+		eingabePanel.add(beschriftungen[0] = new JLabel("Bestand:"));
+		eingabePanel.add(eingabeBestand);
 	}
 
 	public JPanel getCreateMain() {
