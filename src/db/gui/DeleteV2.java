@@ -20,7 +20,6 @@ import java.util.LinkedHashMap;
 import java.awt.event.ActionEvent;
 
 public class DeleteV2 {
-	private JTextField loeschenInputField;
 	private Object[] reihe;
 	private DefaultTableModel model;
 	private DB_Buecherverleih db;
@@ -28,12 +27,7 @@ public class DeleteV2 {
 
 	public DeleteV2(DB_Buecherverleih db) {
 		
-		/*Probleme:
-		 * Zeilen können bearbeitet werden
-		 * Falls Daten bei den Büchern fehlen Probleme
-		 * Könnte theoretisch auch über Reihe auswählen loeschen
-		 * 
-		 */
+		
 		
 		this.db = db;
 		JTable table = new JTable();
@@ -70,7 +64,7 @@ public class DeleteV2 {
 		table.setBackground(Color.white);
 		table.setForeground(Color.black);
 
-		table.setSelectionBackground(new Color(82,13,139));
+		table.setSelectionBackground(Color.red);
 		table.setGridColor(Color.BLACK);
 		table.setSelectionForeground(Color.white);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -86,26 +80,28 @@ public class DeleteV2 {
 		pane.setBounds(381, 89, 834, 584);
 		deleteFrame.getContentPane().add(pane);
 
-		JLabel deleteLabel = new JLabel("Name des Buches");
+		JLabel deleteLabel = new JLabel("Buch auswählen");
 		deleteLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		deleteLabel.setForeground(new Color(0,0,0));
 		deleteLabel.setBounds(42, 60, 178, 45);
 		deleteFrame.getContentPane().add(deleteLabel);
 
-		loeschenInputField = new JTextField();
-		loeschenInputField.setBounds(42, 174, 178, 45);
-		deleteFrame.getContentPane().add(loeschenInputField);
-		loeschenInputField.setColumns(10);
+		
 
 		JButton deleteButton = new JButton("Löschen");
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ev) {
-				try {
-					db.deleteBuch(loeschenInputField.getText());
-					JOptionPane.showMessageDialog(deleteFrame, loeschenInputField.getText() + " wurde gelöscht!");
-					buecherAnzeigenV2();
-				} catch (Exception e) {
+				int i = table.getSelectedRow();
+				if(i <= 0) {
+					try {
+						db.deleteBuch(table.getValueAt(i, 0).toString());
+					}catch (Exception e) {
+						JOptionPane.showMessageDialog(deleteFrame, "Titel nicht vorhanden");
+						}
+					
+					model.removeRow(i);
+				}else {
 					JOptionPane.showMessageDialog(deleteFrame, "Titel nicht vorhanden");
 				}
 
