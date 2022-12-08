@@ -27,11 +27,33 @@ public class DeleteV2 {
 	private JFrame deleteFrame;
 
 	public DeleteV2(DB_Buecherverleih db) {
+		
+		/*Probleme:
+		 * Zeilen können bearbeitet werden
+		 * Falls Daten bei den Büchern fehlen Probleme
+		 * Könnte theoretisch auch über Reihe auswählen loeschen
+		 * 
+		 */
+		
 		this.db = db;
 		JTable table = new JTable();
 
 		Object[] zeilen = { "ISBN", "Titel", "Genre_ID", "Verlag_ID", "Erscheinungsjahr", "Bestand" };
-		model = new DefaultTableModel();
+		model = new DefaultTableModel(){
+
+		    /**
+			 * 
+			 */
+			//Einzelne Zellen koennen nicht mehr bearbeitet werden
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		      
+		       return false;
+		    }
+		};
+
 		deleteFrame = new JFrame("Delete Buch");
 
 		reihe = new Object[6];
@@ -48,7 +70,7 @@ public class DeleteV2 {
 		table.setBackground(Color.white);
 		table.setForeground(Color.black);
 
-		table.setSelectionBackground(Color.red);
+		table.setSelectionBackground(new Color(82,13,139));
 		table.setGridColor(Color.BLACK);
 		table.setSelectionForeground(Color.white);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -66,7 +88,7 @@ public class DeleteV2 {
 
 		JLabel deleteLabel = new JLabel("Name des Buches");
 		deleteLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		deleteLabel.setForeground(new Color(255, 255, 255));
+		deleteLabel.setForeground(new Color(0,0,0));
 		deleteLabel.setBounds(42, 60, 178, 45);
 		deleteFrame.getContentPane().add(deleteLabel);
 
