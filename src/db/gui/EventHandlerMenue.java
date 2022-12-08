@@ -36,9 +36,11 @@ public class EventHandlerMenue implements ActionListener {
 		if (m.getOptionen()[1]== source) {
 			
 			m.getjMenue().dispose();
-			DeleteBuch d = new DeleteBuch(db);
-			
-			d.getDeleteMain().setVisible(true);
+//			DeleteBuch d = new DeleteBuch(db);
+//			
+//			d.getDeleteMain().setVisible(true);
+			DeleteV2 d2 = new DeleteV2(db);
+			d2.getDeleteFrame().setVisible(true);
 
 		}if (m.getOptionen()[2]== source) {
 
