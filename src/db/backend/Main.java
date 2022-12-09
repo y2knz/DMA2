@@ -20,11 +20,23 @@ public class Main {
 //		
 		db = new DB_Buecherverleih(new DB_Zugriff(ipAddresse));
 //
-		db.addBuch("9783937507309", "Norden", "10", "113", "1969", "10");
+
+//		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
+//		db.deleteBuch("Norden");
+
+		
+		
+//		System.out.println(db.genreVorhanden("Fantasy"));
+//		System.out.println(db.autorVorhanden("Orwell"));
+//		db.getVerlagID("Zebra");
+//		db.addVerlag("test");
+//		db.getAutorID("Orwell");
+//		db.addAutor("test", "test");
+//		db.addBuch("9783937507309", "Norden", "10", "113", "1969", "10");
 //		System.out.println(db.verlagVorhanden("Carl Hanser"));
 //		System.out.println(db.autorVorhanden("Orwel"));
 //		db.getBuecherVonAutor("Or");
-//		db.deleteBuch("Norden");
+//	db.deleteBuch("Norden");
 //		db.addExemplar("9781596792500", "4 A 1530 4", "1", "2");
 //		db.deleteExemplar("9781596792500", "4 A 1530 3");
 //		db.updateKundeEmail("1", "Mustermann@mm.de");
