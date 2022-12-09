@@ -15,13 +15,12 @@ public class DB_Buecherverleih {
 	}
 
 	public void addBuch(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
-
-		if(isbnVorhanden(isbn)) {
+		if (isbnVorhanden(isbn)) {
 			System.out.println("Buch bereits vorhanden");
-		}else {
+		} else {
 			try {
-				dbz.setPreparedStatement(dbz.getCon()
-						.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
+						"INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
 								+ "VALUES (?, ?, ?, ?, ?, ?);"));
 				dbz.setString(isbn);
 				dbz.setString(titel);
@@ -36,15 +35,12 @@ public class DB_Buecherverleih {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
-		
 	}
 
 	public void deleteBuch(String titel) {
 		try {
 			dbz.setPreparedStatement(dbz.getCon().prepareStatement("DELETE FROM Buch WHERE titel=?;"));
-
 			dbz.setString(titel);
 			System.out.println(dbz.getPreparedStatement());
 			dbz.getPreparedStatement().executeUpdate();
@@ -59,39 +55,31 @@ public class DB_Buecherverleih {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 			dbz.setPreparedStatement(dbz.getCon()
-<<<<<<< HEAD
-					.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel " + "FROM Schreibt "
-							+ "JOIN Buch " + "ON Buch.ISBN = Schreibt.Buch_ISBN " + "JOIN Autor "
-=======
 					.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel " 
 							+ "FROM Schreibt "
 							+ "JOIN Buch " 
 							+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
 							+ "JOIN Autor "
->>>>>>> branch 'main' of https://github.com/y2knz/DMA2.git
 							+ "ON Autor.ID = Schreibt.Autor_ID "
 							+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname LIKE ?);"));
-
 			dbz.setString(s + "%");
 			dbz.getPreparedStatement().executeQuery();
-
 			liste = dbz.lesenJava();
 			System.out.println(liste);
-
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return liste;
-
 	}
 
 	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
 		try {
 			dbz.getCon().setAutoCommit(false);
 			dbz.setPreparedStatement(dbz.getCon().prepareStatement(
-					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" + "VALUES (?, ?, ?, ?);"));
+					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" 
+							+ "VALUES (?, ?, ?, ?);"));
 			dbz.setString(isbn);
 			dbz.setString(signatur);
 			dbz.setInt(sprache);
@@ -116,7 +104,9 @@ public class DB_Buecherverleih {
 		try {
 			dbz.getCon().setAutoCommit(false);
 			dbz.setPreparedStatement(
-					dbz.getCon().prepareStatement("DELETE FROM Exemplar " + "WHERE ISBN=? " + "AND Signatur=?;"));
+					dbz.getCon().prepareStatement("DELETE FROM Exemplar " 
+							+ "WHERE ISBN=? " 
+							+ "AND Signatur=?;"));
 			dbz.setString(isbn);
 			dbz.setString(signatur);
 			dbz.getPreparedStatement().executeUpdate();
@@ -124,7 +114,9 @@ public class DB_Buecherverleih {
 			dbz.setCounter_Prepared(1);
 
 			dbz.setPreparedStatement(
-					dbz.getCon().prepareStatement("UPDATE Buch " + "SET Bestand =Bestand-1 " + "WHERE ISBN=?"));
+					dbz.getCon().prepareStatement("UPDATE Buch " 
+							+ "SET Bestand =Bestand-1 " 
+							+ "WHERE ISBN=?"));
 			dbz.setString(isbn);
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
@@ -141,9 +133,7 @@ public class DB_Buecherverleih {
 			String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
 			dbz.setSQL(sql);
 			dbz.setInt(kundennr);
-
 			liste = dbz.lesenJava();
-
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 		} catch (SQLException e) {
@@ -155,86 +145,38 @@ public class DB_Buecherverleih {
 	public void updateKundeEmail(String kundennr, String email) {
 		try {
 			dbz.setPreparedStatement(
-					dbz.getCon().prepareStatement("UPDATE Kunde " + "SET E_Mail=? " + "WHERE Kundennummer=?"));
+					dbz.getCon().prepareStatement("UPDATE Kunde " 
+							+ "SET E_Mail=? " 
+							+ "WHERE Kundennummer=?"));
 			dbz.setString(email);
 			dbz.setInt(kundennr);
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-
-<<<<<<< HEAD
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public ArrayList<LinkedHashMap<String, String>> getBuecherVonGenre(String genre) {
-
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-			String sql = "SELECT * FROM Buch WHERE Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
-
-			dbz.setSQL(sql);
-			dbz.setString(genre);
-			liste = dbz.lesenJava();
-
-			dbz.getPreparedStatement().close();
-			dbz.setCounter_Prepared(1);
-
-=======
->>>>>>> branch 'main' of https://github.com/y2knz/DMA2.git
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-<<<<<<< HEAD
-	public void getBuch(String titel) {
-		try {
-			String sql = "SELECT* FROM Buch WHERE Titel LIKE ?";
-
-			dbz.setSQL(sql);
-			dbz.setString(titel + "%");
-			dbz.lesenJava();
-			System.out.println(dbz.lesenJava());
-
-			dbz.getPreparedStatement().close();
-			dbz.setCounter_Prepared(1);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public ArrayList<LinkedHashMap<String, String>> getBuecher() {
-=======
-	public ArrayList<LinkedHashMap<String, String>> getBuecherVonGenre(String genre) {
-
->>>>>>> branch 'main' of https://github.com/y2knz/DMA2.git
-		ArrayList<LinkedHashMap<String, String>> liste = null;
-		try {
-<<<<<<< HEAD
-=======
 			String sql = "SELECT Buch.ISBN, Buch.Titel, CONCAT(Autor.Nachname, ', ', Autor.Vorname) AS Autor, Genre.Bezeichnung, Verlag.Name, Buch.Erscheinungsjahr, Buch.Bestand "
-					+ "FROM Schreibt "
+					+ "FROM Schreibt " 
 					+ "JOIN Buch " 
 					+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
 					+ "JOIN Autor "
-					+ "ON Autor.ID = Schreibt.Autor_ID "
-					+ "JOIN Genre "
+					+ "ON Autor.ID = Schreibt.Autor_ID " 
+					+ "JOIN Genre " 
 					+ "ON Genre.ID = Buch.Genre_ID "
-					+ "JOIN Verlag "
+					+ "JOIN Verlag " 
 					+ "ON Buch.Verlag_ID = Verlag.ID "
 					+ "WHERE Buch.Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
-
 			dbz.setSQL(sql);
 			dbz.setString(genre);
 			liste = dbz.lesenJava();
-
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -245,33 +187,25 @@ public class DB_Buecherverleih {
 	public void getBuch(String titel) {
 		try {
 			String sql = "SELECT* FROM Buch WHERE Titel LIKE ?";
-
 			dbz.setSQL(sql);
 			dbz.setString(titel + "%");
 			dbz.lesenJava();
 			System.out.println(dbz.lesenJava());
-
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public ArrayList<LinkedHashMap<String, String>> getBuecher() {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
->>>>>>> branch 'main' of https://github.com/y2knz/DMA2.git
 			String sql = "SELECT * FROM Buch";
 			dbz.setSQL(sql);
-
 			liste = dbz.lesenJava();
-
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -281,14 +215,13 @@ public class DB_Buecherverleih {
 	public ArrayList<LinkedHashMap<String, String>> showExemplar(String isbn, String Signatur) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-			String sql = "SELECT* FROM Exemplar WHERE ISBN=? AND Signatur=?";
-
+			String sql = "SELECT* FROM Exemplar "
+					+ "WHERE ISBN=? "
+					+ "AND Signatur=?";
 			dbz.setSQL(sql);
 			dbz.setString(isbn);
 			dbz.setString(Signatur);
-
 			liste = dbz.lesenJava();
-
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 
@@ -302,11 +235,10 @@ public class DB_Buecherverleih {
 	public ArrayList<LinkedHashMap<String, String>> getGenre() {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-			String sql = "SELECT Bezeichnung FROM Genre";
+			String sql = "SELECT Bezeichnung "
+					+ "FROM Genre";
 			dbz.setSQL(sql);
-
 			liste = dbz.lesenJava();
-
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 
@@ -315,15 +247,14 @@ public class DB_Buecherverleih {
 		}
 		return liste;
 	}
-<<<<<<< HEAD
-=======
-	
+
 	public boolean isbnVorhanden(String isbn) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
-
 		boolean istVorhanden;
 		try {
-			String sql = "SELECT ISBN FROM Buch WHERE ISBN=?";
+			String sql = "SELECT ISBN "
+					+ "FROM Buch "
+					+ "WHERE ISBN=?";
 			dbz.setSQL(sql);
 			dbz.setString(isbn);
 			liste = dbz.lesenJava();
@@ -332,25 +263,22 @@ public class DB_Buecherverleih {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	
-		if(liste.size()>0) {
+		if (liste.size() > 0) {
 			istVorhanden = true;
-		} else istVorhanden = false;
-
+		} else
+			istVorhanden = false;
 		return istVorhanden;
 	}
-	
+
 	public boolean verlagVorhanden(String verlag) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
-
 		boolean istVorhanden;
 		try {
-			String sql = "SELECT Verlag.Name "
-					+ "FROM Verlag "
-					+ "LEFT JOIN Buch "
+			String sql = "SELECT Verlag.Name " 
+					+ "FROM Verlag " 	
+					+ "LEFT JOIN Buch " 
 					+ "ON Verlag.ID = Buch.Verlag_ID "
 					+ "WHERE Verlag.ID=(SELECT ID FROM Verlag WHERE Name=?);";
-
 			dbz.setSQL(sql);
 			dbz.setString(verlag);
 			liste = dbz.lesenJava();
@@ -360,27 +288,25 @@ public class DB_Buecherverleih {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	
-		if(liste.size()>0) {
+		if (liste.size() > 0) {
 			istVorhanden = true;
-		} else istVorhanden = false;
+		} else
+			istVorhanden = false;
 
 		return istVorhanden;
 	}
-	
+
 	public boolean autorVorhanden(String autorNachname) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
-
 		boolean istVorhanden;
 		try {
-			String sql = "SELECT Autor.Nachname "
-					+ "FROM Autor "
+			String sql = "SELECT Autor.Nachname " 
+					+ "FROM Autor " 
 					+ "LEFT JOIN Schreibt "
-					+ "ON Autor.ID = Schreibt.Autor_ID "
-					+ "LEFT JOIN Buch "
+					+ "ON Autor.ID = Schreibt.Autor_ID " 
+					+ "LEFT JOIN Buch " 
 					+ "ON Schreibt.Buch_ISBN = Buch_ISBN "
 					+ "WHERE Autor.ID=(SELECT ID FROM Autor WHERE Nachname=?);";
-
 			dbz.setSQL(sql);
 			dbz.setString(autorNachname);
 			liste = dbz.lesenJava();
@@ -390,14 +316,14 @@ public class DB_Buecherverleih {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	
-		if(liste.size()>0) {
+
+		if (liste.size() > 0) {
 			istVorhanden = true;
-		} else istVorhanden = false;
+		} else
+			istVorhanden = false;
 
 		return istVorhanden;
 	}
->>>>>>> branch 'main' of https://github.com/y2knz/DMA2.git
 
 	// Methode nur temporaer
 	public void close() {
