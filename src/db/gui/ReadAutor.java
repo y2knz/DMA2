@@ -109,8 +109,10 @@ public class ReadAutor {
 				} else {
 
 					// TODO Methode
-					db.getBuecherVonAutor(autor);
-					ArrayList<LinkedHashMap<String, String>> autorBuecher = new ArrayList<>();
+					
+					ArrayList<LinkedHashMap<String, String>> autorBuecher = db.getBuecherVonAutor(autor);
+					
+					System.out.println(autorBuecher.toString());
 					if (autorBuecher.isEmpty()) {
 						JOptionPane.showMessageDialog(readAutorFrame, "Autor nicht vorhanden");
 					} else {

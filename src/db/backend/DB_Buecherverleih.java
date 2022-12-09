@@ -7,17 +7,18 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class DB_Buecherverleih {
-	
+
 	public DB_Zugriff dbz;
-	
+
 	public DB_Buecherverleih(DB_Zugriff db) {
 		this.dbz = db;
 	}
-	
+
 	public void addBuch(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
 		try {
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
-					+ "VALUES (?, ?, ?, ?, ?, ?);"));
+			dbz.setPreparedStatement(dbz.getCon()
+					.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
+							+ "VALUES (?, ?, ?, ?, ?, ?);"));
 			dbz.setString(isbn);
 			dbz.setString(titel);
 			dbz.setString(genre);
@@ -32,7 +33,7 @@ public class DB_Buecherverleih {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteBuch(String titel) {
 		try {
 			dbz.setPreparedStatement(dbz.getCon().prepareStatement("DELETE FROM Buch WHERE titel=?;"));
@@ -46,41 +47,36 @@ public class DB_Buecherverleih {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<LinkedHashMap<String, String>> getBuecherVonAutor(String s) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel "
-					+ "FROM Schreibt "
-					+ "JOIN Buch "
-					+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
-					+ "JOIN Autor "
-					+ "ON Autor.ID = Schreibt.Autor_ID "
-					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname LIKE ?);"));
-			
+			dbz.setPreparedStatement(dbz.getCon()
+					.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel " + "FROM Schreibt "
+							+ "JOIN Buch " + "ON Buch.ISBN = Schreibt.Buch_ISBN " + "JOIN Autor "
+							+ "ON Autor.ID = Schreibt.Autor_ID "
+							+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname LIKE ?);"));
+
 			dbz.setString(s + "%");
 			dbz.getPreparedStatement().executeQuery();
-			
-			
+
 			liste = dbz.lesenJava();
 			System.out.println(liste);
-			
+
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-			return liste;
-			
-		}
-	
-	
-	
+		return liste;
+
+	}
+
 	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
 		try {
 			dbz.getCon().setAutoCommit(false);
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement("INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)"
-					+ "VALUES (?, ?, ?, ?);"));
+			dbz.setPreparedStatement(dbz.getCon().prepareStatement(
+					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" + "VALUES (?, ?, ?, ?);"));
 			dbz.setString(isbn);
 			dbz.setString(signatur);
 			dbz.setInt(sprache);
@@ -88,10 +84,9 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-			
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement("UPDATE Buch "
-					+ "SET Bestand =Bestand+1 "
-					+ "WHERE ISBN=?"));
+
+			dbz.setPreparedStatement(
+					dbz.getCon().prepareStatement("UPDATE Buch " + "SET Bestand =Bestand+1 " + "WHERE ISBN=?"));
 			dbz.setString(isbn);
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
@@ -101,22 +96,20 @@ public class DB_Buecherverleih {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void deleteExemplar(String isbn, String signatur) {
 		try {
 			dbz.getCon().setAutoCommit(false);
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement("DELETE FROM Exemplar "
-					+ "WHERE ISBN=? "
-					+ "AND Signatur=?;"));
+			dbz.setPreparedStatement(
+					dbz.getCon().prepareStatement("DELETE FROM Exemplar " + "WHERE ISBN=? " + "AND Signatur=?;"));
 			dbz.setString(isbn);
 			dbz.setString(signatur);
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-			
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement("UPDATE Buch "
-					+ "SET Bestand =Bestand-1 "
-					+ "WHERE ISBN=?"));
+
+			dbz.setPreparedStatement(
+					dbz.getCon().prepareStatement("UPDATE Buch " + "SET Bestand =Bestand-1 " + "WHERE ISBN=?"));
 			dbz.setString(isbn);
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
@@ -126,139 +119,132 @@ public class DB_Buecherverleih {
 			e.printStackTrace();
 		}
 	}
+
 	public ArrayList<LinkedHashMap<String, String>> getKundeEmail(int kundennr) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
-		dbz.setSQL(sql);
-		dbz.setInt(kundennr);
-		
-		liste = dbz.lesenJava();
-		
-		dbz.getPreparedStatement().close();
-		dbz.setCounter_Prepared(1);
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+			String sql = "SELECT* FROM Kunde WHERE Kundennummer=?";
+			dbz.setSQL(sql);
+			dbz.setInt(kundennr);
+
+			liste = dbz.lesenJava();
+
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return liste;
 	}
-	
-	
+
 	public void updateKundeEmail(String kundennr, String email) {
 		try {
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement("UPDATE Kunde "
-					+ "SET E_Mail=? "
-					+ "WHERE Kundennummer=?"));
+			dbz.setPreparedStatement(
+					dbz.getCon().prepareStatement("UPDATE Kunde " + "SET E_Mail=? " + "WHERE Kundennummer=?"));
 			dbz.setString(email);
 			dbz.setInt(kundennr);
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 
-		}  catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<LinkedHashMap<String, String>> getBuecherVonGenre(String genre) {
-		
-		ArrayList<LinkedHashMap<String, String>> liste=null;
+
+		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 			String sql = "SELECT * FROM Buch WHERE Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
-			
+
 			dbz.setSQL(sql);
 			dbz.setString(genre);
 			liste = dbz.lesenJava();
-			
-			
+
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return liste;
 	}
-	
-	public void getBuch (String titel) {
+
+	public void getBuch(String titel) {
 		try {
-		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?";
-		
-		dbz.setSQL(sql);
-		dbz.setString(titel + "%");
-		dbz.lesenJava();
-		System.out.println(dbz.lesenJava());
-		
-		dbz.getPreparedStatement().close();
-		dbz.setCounter_Prepared(1);
-		
-	
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-		
-			
+			String sql = "SELECT* FROM Buch WHERE Titel LIKE ?";
+
+			dbz.setSQL(sql);
+			dbz.setString(titel + "%");
+			dbz.lesenJava();
+			System.out.println(dbz.lesenJava());
+
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	
-	public ArrayList<LinkedHashMap<String, String>> getBuecher () {
+
+	}
+
+	public ArrayList<LinkedHashMap<String, String>> getBuecher() {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT * FROM Buch";
-		dbz.setSQL(sql);
-		
-		liste = dbz.lesenJava();
-		
-		dbz.getPreparedStatement().close();
-		dbz.setCounter_Prepared(1);
-		
-	
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+			String sql = "SELECT * FROM Buch";
+			dbz.setSQL(sql);
+
+			liste = dbz.lesenJava();
+
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return liste;
 	}
 
 	public ArrayList<LinkedHashMap<String, String>> showExemplar(String isbn, String Signatur) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT* FROM Exemplar WHERE ISBN=? AND Signatur=?";
-		
-		dbz.setSQL(sql);
-		dbz.setString(isbn);
-		dbz.setString(Signatur);
-		
-		liste = dbz.lesenJava();
-		
-		dbz.getPreparedStatement().close();
-		dbz.setCounter_Prepared(1);
-		
-	
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+			String sql = "SELECT* FROM Exemplar WHERE ISBN=? AND Signatur=?";
+
+			dbz.setSQL(sql);
+			dbz.setString(isbn);
+			dbz.setString(Signatur);
+
+			liste = dbz.lesenJava();
+
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return liste;
-		
+
 	}
-	
-	public ArrayList<LinkedHashMap<String, String>> getGenre () {
+
+	public ArrayList<LinkedHashMap<String, String>> getGenre() {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-		String sql = "SELECT Bezeichnung FROM Genre";
-		dbz.setSQL(sql);
-		
-		liste = dbz.lesenJava();
-		
-		dbz.getPreparedStatement().close();
-		dbz.setCounter_Prepared(1);
-		
-	
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-		return liste;
-	} 
+			String sql = "SELECT Bezeichnung FROM Genre";
+			dbz.setSQL(sql);
 
-	//Methode nur temporaer
+			liste = dbz.lesenJava();
+
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return liste;
+	}
+
+	// Methode nur temporaer
 	public void close() {
 		dbz.close();
 	}
