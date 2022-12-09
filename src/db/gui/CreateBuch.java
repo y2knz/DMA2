@@ -130,9 +130,12 @@ public class CreateBuch {
 				String verlagid = eingabeVerlagID.getText();
 				String jahr = eingabeErscheinungsjahr.getText();
 				String bestand = eingabeBestand.getText();
-				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || autorVorname.isEmpty() || verlagid.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
+				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlagid.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
 					JOptionPane.showMessageDialog(jCreate, "Es sind nicht alle Felder ausgefüllt");
 				} else {
+					if(autorVorname.isEmpty()) {
+						autorVorname = "";
+					}
 					db.addBuch(isbn, titel, autorNachname, autorVorname, genreid, verlagid, jahr, bestand);
 				}
 			}
