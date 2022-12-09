@@ -9,26 +9,20 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import db.backend.DB_Buecherverleih;
-import javax.swing.JLabel;
 
-
-public class ReadGenre {
-
-	/*
-	 * Genre über Drop Down Menü auswählen
-	 * Buecher Anzeigen wie bei Delete
-	 */
+public class ReadAutor {
 	private DefaultTableModel model;
-	private JFrame readGFrame;
+	private JFrame readAutorFrame;
 	private DB_Buecherverleih db;
 	private Object [] reihe;
-//	private JComboBox<String> genreComboBox;
-	public ReadGenre(DB_Buecherverleih db) {
+
+	public ReadAutor(DB_Buecherverleih db) {
 		
 		this.db = db;
 		
@@ -49,13 +43,13 @@ public class ReadGenre {
 		
 		reihe = new Object[6];
 		
-		readGFrame = new JFrame("Read Genre");
-		readGFrame.getContentPane().setBackground(new Color(221, 224, 229));
-		readGFrame.getContentPane().setForeground(Color.WHITE);
-		readGFrame.setSize(new Dimension(1280, 720));
-		readGFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		readGFrame.getContentPane().setLayout(null);
-		readGFrame.setLocationRelativeTo(null);
+		readAutorFrame = new JFrame("Read Autor");
+		readAutorFrame.getContentPane().setBackground(new Color(221, 224, 229));
+		readAutorFrame.getContentPane().setForeground(Color.WHITE);
+		readAutorFrame.setSize(new Dimension(1280, 720));
+		readAutorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		readAutorFrame.getContentPane().setLayout(null);
+		readAutorFrame.setLocationRelativeTo(null);
 		model.setColumnIdentifiers(zeilen);
 		
 		buecherTable.setModel(model);
@@ -74,13 +68,9 @@ public class ReadGenre {
 		pane.setForeground(Color.red);
 		pane.setBackground(Color.white);
 		pane.setBounds(283, 89, 932, 584);
-		readGFrame.getContentPane().add(pane);
+		readAutorFrame.getContentPane().add(pane);
 		
 		String[] test = {"lorem,", "ipsum", "etc"};
-		
-//		genreComboBox = new JComboBox<String>(test);
-//		genreComboBox.setSize(new Dimension(100,100));
-//		readGFrame.getContentPane().add(genreComboBox);
 		
 		JButton menueButton = new JButton("Menü");
 		menueButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -89,18 +79,18 @@ public class ReadGenre {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Menue m = new Menue(db);
-				readGFrame.dispose();
+				readAutorFrame.dispose();
 				m.getjMenue().setVisible(true);
 
 			}
 		});
 		menueButton.setBounds(1072, 21, 145, 36);
-		readGFrame.getContentPane().add(menueButton);
+		readAutorFrame.getContentPane().add(menueButton);
 		
-		JLabel genreLabel = new JLabel("Genre auswählen");
+		JLabel genreLabel = new JLabel("Autor auswählen");
 		genreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		genreLabel.setBounds(26, 54, 198, 47);
-		readGFrame.getContentPane().add(genreLabel);
+		readAutorFrame.getContentPane().add(genreLabel);
 		
 		
 		
@@ -108,25 +98,27 @@ public class ReadGenre {
 		JComboBox<String> genreComboBox = new JComboBox <String>(test);
 		genreComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		genreComboBox.setBounds(26, 152, 164, 47);
-		readGFrame.getContentPane().add(genreComboBox);
+		readAutorFrame.getContentPane().add(genreComboBox);
 		
 		JButton auswaehlenButton = new JButton("Auswählen");
 		auswaehlenButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		auswaehlenButton.setBounds(26, 265, 164, 47);
-		readGFrame.getContentPane().add(auswaehlenButton);
+		readAutorFrame.getContentPane().add(auswaehlenButton);
 
-		readGFrame.revalidate();
+		readAutorFrame.revalidate();
 
-		readGFrame.setVisible(true);
+		readAutorFrame.setVisible(true);
 		
 		
 		
-		readGFrame.revalidate();
-		readGFrame.setVisible(true);
+		readAutorFrame.revalidate();
+		readAutorFrame.setVisible(true);
 		
 	}
-	public JFrame getReadGFrame() {
-		return readGFrame;
+
+	public JFrame getReadAutorFrame() {
+		return readAutorFrame;
 	}
-	
+
+
 }

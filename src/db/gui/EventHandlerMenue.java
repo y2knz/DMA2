@@ -46,10 +46,14 @@ public class EventHandlerMenue implements ActionListener {
 
 		}if (m.getOptionen()[3]== source) {
 			m.getjMenue().dispose();
-			ReadBuecherAutor rba = new ReadBuecherAutor(db);
-			rba.getbAutorFrame().setVisible(true);
+			ReadAutor rba = new ReadAutor(db);
+			rba.getReadAutorFrame().setVisible(true);
 
 		}if (m.getOptionen()[4]== source) {
+			m.getjMenue().dispose();
+			ReadGenre rg = new ReadGenre(db);
+			rg.getReadGFrame().setVisible(true);
+			
 
 		}if (m.getOptionen()[5]== source) {
 
