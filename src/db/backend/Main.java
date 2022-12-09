@@ -24,6 +24,8 @@ public class Main {
 //		db.deleteExemplar("9781596792500", "4 A 1530 3");
 //		db.updateKundeEmail("1", "Mustermann@mm.de");
 //		db.getBuch("H"); 
+		db.getBuecherVonGenre("Fantasy");
+		System.out.println(db.getGenre());
 		
 //		for(LinkedHashMap<String,String> daten: db.getBuecherVonGenre("Fantasy")){
 //			System.out.println(daten);
