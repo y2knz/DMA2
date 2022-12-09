@@ -20,14 +20,17 @@ public class Main {
 //		
 		db = new DB_Buecherverleih(new DB_Zugriff(ipAddresse));
 //
-		db.getBuecherVonAutor("Or");
+		db.addBuch("9783937507309", "Norden", "10", "113", "1969", "10");
+//		System.out.println(db.verlagVorhanden("Carl Hanser"));
+//		System.out.println(db.autorVorhanden("Orwel"));
+//		db.getBuecherVonAutor("Or");
 //		db.deleteBuch("Norden");
 //		db.addExemplar("9781596792500", "4 A 1530 4", "1", "2");
 //		db.deleteExemplar("9781596792500", "4 A 1530 3");
 //		db.updateKundeEmail("1", "Mustermann@mm.de");
 //		db.getBuch("H"); 
-		db.getBuecherVonGenre("Fantasy");
-		System.out.println(db.getGenre());
+//		db.getBuecherVonGenre("Fantasy");
+//		System.out.println(db.getGenre());
 		
 //		for(LinkedHashMap<String,String> daten: db.getBuecherVonGenre("Fantasy")){
 //			System.out.println(daten);
