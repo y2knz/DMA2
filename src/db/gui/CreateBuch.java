@@ -34,11 +34,13 @@ public class CreateBuch {
 	
 	private JTextField eingabeISBN = new JTextField(13);
 	private JTextField eingabeTitel = new JTextField(50);
+	private JTextField eingabeAutorNachname = new JTextField(30);
+	private JTextField eingabeAutorVorname = new JTextField(50);
 	private JTextField eingabeGenreID = new JTextField(5);
 	private JTextField eingabeVerlagID = new JTextField(5);
 	private JTextField eingabeErscheinungsjahr = new JTextField(4);
 	private JTextField eingabeBestand = new JTextField(5);
-	private JLabel[] beschriftungen = new JLabel[6];
+	private JLabel[] beschriftungen = new JLabel[8];
 
 
 	public CreateBuch(DB_Buecherverleih db) {
@@ -58,7 +60,7 @@ public class CreateBuch {
 
 		//
 
-		GridLayout eingabeLayout = new GridLayout(6, 2);
+		GridLayout eingabeLayout = new GridLayout(8, 2);
 		GridLayout bestaetigungLayout = new GridLayout(1, 1);
 		
 		JPanel eingabePanel = new JPanel();
@@ -122,14 +124,16 @@ public class CreateBuch {
 			public void actionPerformed(ActionEvent e) {
 				String isbn = eingabeISBN.getText();
 				String titel = eingabeTitel.getText();
-				String genreid = eingabeGenreID.getText();
+				String autorNachname = eingabeAutorNachname.getText();
+				String autorVorname = eingabeAutorVorname.getText();
+				String genreid = Integer.toString(genreComboBox.getSelectedIndex()+1);
 				String verlagid = eingabeVerlagID.getText();
 				String jahr = eingabeErscheinungsjahr.getText();
 				String bestand = eingabeBestand.getText();
-				if(isbn.isEmpty() || titel.isEmpty() || genreid.isEmpty() || verlagid.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
+				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || autorVorname.isEmpty() || verlagid.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
 					JOptionPane.showMessageDialog(jCreate, "Es sind nicht alle Felder ausgefüllt");
 				} else {
-					db.addBuch(isbn, titel, genreid, verlagid, jahr, bestand);
+					db.addBuch(isbn, titel, autorNachname, autorVorname, genreid, verlagid, jahr, bestand);
 				}
 			}
 		});
@@ -147,15 +151,19 @@ public class CreateBuch {
 		
 		eingabePanel.add(beschriftungen[0] = new JLabel("ISBN:"));
 		eingabePanel.add(eingabeISBN);
-		eingabePanel.add(beschriftungen[0] = new JLabel("Titel:"));
+		eingabePanel.add(beschriftungen[1] = new JLabel("Titel:"));
 		eingabePanel.add(eingabeTitel);
-		eingabePanel.add(beschriftungen[0] = new JLabel("Genre:"));
+		eingabePanel.add(beschriftungen[2] = new JLabel("Autor Nachname:"));
+		eingabePanel.add(eingabeAutorNachname);
+		eingabePanel.add(beschriftungen[3] = new JLabel("Autor Vorname:"));
+		eingabePanel.add(eingabeAutorVorname);
+		eingabePanel.add(beschriftungen[4] = new JLabel("Genre:"));
 		eingabePanel.add(genreComboBox);
-		eingabePanel.add(beschriftungen[0] = new JLabel("VerlagID:"));
+		eingabePanel.add(beschriftungen[5] = new JLabel("VerlagID:"));
 		eingabePanel.add(eingabeVerlagID);
-		eingabePanel.add(beschriftungen[0] = new JLabel("Erscheinungsjahr:"));
+		eingabePanel.add(beschriftungen[6] = new JLabel("Erscheinungsjahr:"));
 		eingabePanel.add(eingabeErscheinungsjahr);
-		eingabePanel.add(beschriftungen[0] = new JLabel("Bestand:"));
+		eingabePanel.add(beschriftungen[7] = new JLabel("Bestand:"));
 		eingabePanel.add(eingabeBestand);
 		bestaetigungPanel.add(createButton);
 	}
