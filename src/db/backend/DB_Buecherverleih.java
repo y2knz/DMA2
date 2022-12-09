@@ -128,10 +128,7 @@ public class DB_Buecherverleih {
 		
 		dbz.getPreparedStatement().close();
 		dbz.setCounter_Prepared(1);
-		
-	
 	} catch (SQLException e) {
-		
 		e.printStackTrace();
 	}
 		return liste;
@@ -169,20 +166,12 @@ public class DB_Buecherverleih {
 			dbz.setCounter_Prepared(1);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return liste;
-				
-//		//setSQL();
-//		ArrayList<LinkedHashMap<String,String>> daten = lesenJava();
-//		for(LinkedHashMap<String,String>datensatz:daten) {
-//			System.out.println(datensatz);
-//		}
 	}
 	
 	public void getBuch (String titel) {
-		//wildcard
 		try {
 		String sql ="SELECT* FROM Buch WHERE Titel LIKE ?";
 		
@@ -196,7 +185,6 @@ public class DB_Buecherverleih {
 		
 	
 	} catch (SQLException e) {
-		
 		e.printStackTrace();
 	}
 		
@@ -216,7 +204,6 @@ public class DB_Buecherverleih {
 		
 	
 	} catch (SQLException e) {
-		
 		e.printStackTrace();
 	}
 		return liste;
@@ -238,12 +225,29 @@ public class DB_Buecherverleih {
 		
 	
 	} catch (SQLException e) {
-		
 		e.printStackTrace();
 	}
 		return liste;
 		
 	}
+	
+	public ArrayList<LinkedHashMap<String, String>> getGenre () {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+		try {
+		String sql = "SELECT Bezeichnung FROM Genre";
+		dbz.setSQL(sql);
+		
+		liste = dbz.lesenJava();
+		
+		dbz.getPreparedStatement().close();
+		dbz.setCounter_Prepared(1);
+		
+	
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+		return liste;
+	} 
 
 	//Methode nur temporaer
 	public void close() {
