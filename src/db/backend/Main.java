@@ -14,7 +14,9 @@ public class Main {
 		//String ipAddresse = sc.next();
 		
 		//String ipAddress = "192.168.0.137";
+
 		String ipAddresse  = "192.168.0.137";
+
 //		
 		db = new DB_Buecherverleih(new DB_Zugriff(ipAddresse));
 //
