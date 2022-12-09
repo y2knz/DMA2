@@ -59,10 +59,11 @@ public class DB_Buecherverleih {
 					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname LIKE ?);"));
 			
 			dbz.setString(s + "%");
-			ResultSet rs = dbz.getPreparedStatement().executeQuery();
-			System.out.println(dbz.konvertiereJava(rs));
+			dbz.getPreparedStatement().executeQuery();
+			
 			
 			liste = dbz.lesenJava();
+			System.out.println(liste);
 			
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
