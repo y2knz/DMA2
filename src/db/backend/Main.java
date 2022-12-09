@@ -14,16 +14,16 @@ public class Main {
 		//String ipAddresse = sc.next();
 		
 		//String ipAddress = "192.168.0.137";
-//		String ipAddresse  = "192.168.2.111";
+		String ipAddresse  = "192.168.0.137";
 //		
-//		db = new DB(ipAddresse);
+		db = new DB_Buecherverleih(new DB_Zugriff(ipAddresse));
 //
-//		db.getBuecherVonAutor();
+		db.getBuecherVonAutor("Or");
 //		db.deleteBuch("Norden");
 //		db.addExemplar("9781596792500", "4 A 1530 4", "1", "2");
 //		db.deleteExemplar("9781596792500", "4 A 1530 3");
 //		db.updateKundeEmail("1", "Mustermann@mm.de");
-		//db.getBook("H"); 
+		db.getBuch("H"); 
 		
 //		for(LinkedHashMap<String,String> daten: db.getBuecherVonGenre("Fantasy")){
 //			System.out.println(daten);
@@ -34,7 +34,7 @@ public class Main {
 //			System.out.println(daten);
 //		}
 	
-	db.getBuch("1");
+//		db.getBuch("1");
 
 //		for(LinkedHashMap<String, String> daten:db.getBuecher()) {
 //			System.out.println(daten);
