@@ -3,6 +3,7 @@ package db.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -88,6 +90,29 @@ public class CreateBuch {
 		menueButton.setPreferredSize(new Dimension(140, 50));
 		menueButton.addActionListener(ed);
 		
+		// GENRE
+		
+		ArrayList<String> genre = new ArrayList<>();
+
+		for (int i = 0; i < db.getGenre().size(); i++) {
+
+			LinkedHashMap<String, String> genreSchluessel = db.getGenre().get(i);
+
+			System.out.println(genreSchluessel.keySet());
+
+			genre.add(genreSchluessel.get("Bezeichnung"));
+			System.out.println(genreSchluessel.get("Bezeichnung"));
+
+		}
+
+		String[] genreArray = new String[genre.size()];
+
+		genreArray = genre.toArray(genreArray);
+		
+		JComboBox<String> genreComboBox = new JComboBox<String>(genreArray);
+		genreComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		genreComboBox.setBounds(26, 152, 164, 47);
+		
 		// Create Button
 		
 		createButton = new JButton("Hinzufügen");
@@ -124,8 +149,8 @@ public class CreateBuch {
 		eingabePanel.add(eingabeISBN);
 		eingabePanel.add(beschriftungen[0] = new JLabel("Titel:"));
 		eingabePanel.add(eingabeTitel);
-		eingabePanel.add(beschriftungen[0] = new JLabel("GenreID:"));
-		eingabePanel.add(eingabeGenreID);
+		eingabePanel.add(beschriftungen[0] = new JLabel("Genre:"));
+		eingabePanel.add(genreComboBox);
 		eingabePanel.add(beschriftungen[0] = new JLabel("VerlagID:"));
 		eingabePanel.add(eingabeVerlagID);
 		eingabePanel.add(beschriftungen[0] = new JLabel("Erscheinungsjahr:"));
