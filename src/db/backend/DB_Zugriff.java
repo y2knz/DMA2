@@ -38,6 +38,7 @@ public class DB_Zugriff {
 		} catch (SQLException e) {
 		}
 		ps = null;
+//		counter_prepared = 1;
 		try {
 			con.close();
 		} catch (SQLException e) {

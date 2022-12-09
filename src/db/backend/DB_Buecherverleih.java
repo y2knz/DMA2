@@ -27,6 +27,7 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.getPreparedStatement().executeUpdate();
+			dbz.setCounter_Prepared(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -46,24 +47,32 @@ public class DB_Buecherverleih {
 		}
 	}
 	
-	public void getBuecherVonAutor(String s) {
+	public ArrayList<LinkedHashMap<String, String>> getBuecherVonAutor(String s) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 			dbz.setPreparedStatement(dbz.getCon().prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel "
-					+ "FROM Schreib "
+					+ "FROM Schreibt "
 					+ "JOIN Buch "
 					+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
 					+ "JOIN Autor "
 					+ "ON Autor.ID = Schreibt.Autor_ID "
-					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname=?);"));
+					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname LIKE ?);"));
 			
-			dbz.setString(s);
-			System.out.println(dbz.getPreparedStatement());
-			ResultSet rs = dbz.getPreparedStatement().executeQuery();
-			System.out.println(dbz.konvertiereJava(rs));
+			dbz.setString(s + "%");
+			dbz.getPreparedStatement().executeQuery();
+			
+			
+			liste = dbz.lesenJava();
+			System.out.println(liste);
+			
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+			return liste;
+			
+		}
 	
 	
 	
