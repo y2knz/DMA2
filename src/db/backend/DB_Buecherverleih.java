@@ -15,23 +15,28 @@ public class DB_Buecherverleih {
 	}
 
 	public void addBuch(String isbn, String titel, String genre, String verlag, String jahr, String bestand) {
-		try {
-			dbz.setPreparedStatement(dbz.getCon()
-					.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
-							+ "VALUES (?, ?, ?, ?, ?, ?);"));
-			dbz.setString(isbn);
-			dbz.setString(titel);
-			dbz.setString(genre);
-			dbz.setString(verlag);
-			dbz.setString(jahr);
-			dbz.setString(bestand);
-			dbz.getPreparedStatement().executeUpdate();
-			dbz.getPreparedStatement().close();
-			dbz.getPreparedStatement().executeUpdate();
-			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(isbnVorhanden(isbn)) {
+			System.out.println("Buch bereits vorhanden");
+		}else {
+			try {
+				dbz.setPreparedStatement(dbz.getCon()
+						.prepareStatement("INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
+								+ "VALUES (?, ?, ?, ?, ?, ?);"));
+				dbz.setString(isbn);
+				dbz.setString(titel);
+				dbz.setString(genre);
+				dbz.setString(verlag);
+				dbz.setString(jahr);
+				dbz.setString(bestand);
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.getPreparedStatement().close();
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.setCounter_Prepared(1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		
 	}
 
 	public void deleteBuch(String titel) {
@@ -256,6 +261,86 @@ public class DB_Buecherverleih {
 			e.printStackTrace();
 		}
 		return liste;
+	}
+	
+	public boolean isbnVorhanden(String isbn) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+
+		boolean istVorhanden;
+		try {
+			String sql = "SELECT ISBN FROM Buch WHERE ISBN=?";
+			dbz.setSQL(sql);
+			dbz.setString(isbn);
+			liste = dbz.lesenJava();
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		if(liste.size()>0) {
+			istVorhanden = true;
+		} else istVorhanden = false;
+
+		return istVorhanden;
+	}
+	
+	public boolean verlagVorhanden(String verlag) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+
+		boolean istVorhanden;
+		try {
+			String sql = "SELECT Verlag.Name "
+					+ "FROM Verlag "
+					+ "LEFT JOIN Buch "
+					+ "ON Verlag.ID = Buch.Verlag_ID "
+					+ "WHERE Verlag.ID=(SELECT ID FROM Verlag WHERE Name=?);";
+
+			dbz.setSQL(sql);
+			dbz.setString(verlag);
+			liste = dbz.lesenJava();
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+			System.out.println(liste);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		if(liste.size()>0) {
+			istVorhanden = true;
+		} else istVorhanden = false;
+
+		return istVorhanden;
+	}
+	
+	public boolean autorVorhanden(String autorNachname) {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+
+		boolean istVorhanden;
+		try {
+			String sql = "SELECT Autor.Nachname "
+					+ "FROM Autor "
+					+ "LEFT JOIN Schreibt "
+					+ "ON Autor.ID = Schreibt.Autor_ID "
+					+ "LEFT JOIN Buch "
+					+ "ON Schreibt.Buch_ISBN = Buch_ISBN "
+					+ "WHERE Autor.ID=(SELECT ID FROM Autor WHERE Nachname=?);";
+
+			dbz.setSQL(sql);
+			dbz.setString(autorNachname);
+			liste = dbz.lesenJava();
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+			System.out.println(liste);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		if(liste.size()>0) {
+			istVorhanden = true;
+		} else istVorhanden = false;
+
+		return istVorhanden;
 	}
 
 	// Methode nur temporaer
