@@ -14,9 +14,9 @@ public class Main {
 		//String ipAddresse = sc.next();
 		
 		//String ipAddress = "192.168.0.137";
-//		String ipAddresse  = "192.168.2.111";
+		String ipAddresse  = "192.168.1.23";
 //		
-//		db = new DB(ipAddresse);
+		db = new DB_Buecherverleih(new DB_Zugriff(ipAddresse));
 //
 //		db.getBuecherVonAutor();
 //		db.deleteBuch("Norden");

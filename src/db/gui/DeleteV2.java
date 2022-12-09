@@ -90,7 +90,11 @@ public class DeleteV2 {
 			@Override
 			public void actionPerformed(ActionEvent ev) {
 				int i = table.getSelectedRow();
-				String titel = table.getValueAt(i, 0).toString();
+				String titel = table.getValueAt(i, 1).toString();
+				
+				System.out.println(titel);
+				
+				System.out.println(i);
 				
 				if(i <= 0 && titel != null) {
 					try {

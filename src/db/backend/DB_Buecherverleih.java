@@ -51,7 +51,7 @@ public class DB_Buecherverleih {
 			dbz.setPreparedStatement(dbz.getCon().prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel "
 					+ "FROM Schreib "
 					+ "JOIN Buch "
-					+ "ON Buch.ISBN = Schreibt.Buch_ISBN "
+					+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
 					+ "JOIN Autor "
 					+ "ON Autor.ID = Schreibt.Autor_ID "
 					+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname=?);"));
