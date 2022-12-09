@@ -170,21 +170,6 @@ public class DB_Buecherverleih {
 					+ "JOIN Verlag "
 					+ "ON Buch.Verlag_ID = Verlag.ID "
 					+ "WHERE Buch.Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
-					
-					
-					
-//					
-//					
-//					+ "FROM Buch "
-//					+ "JOIN Schreibt " 
-//					+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
-//					+ "JOIN Verlag "
-//					+ "ON Buch.Verlag_ID = Verlag.ID "
-//					+ "JOIN Genre "
-//					+ "ON Genre.ID = Buch.Genre; "
-//					+ "JOIN Autor "
-//					+ "ON Autor.ID = Schreibt.Autor_ID; ";
-//					+ "JOIN WHERE IN Buch.Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
 
 			dbz.setSQL(sql);
 			dbz.setString(genre);
