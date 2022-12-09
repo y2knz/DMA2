@@ -35,9 +35,6 @@ public class DeleteV2 {
 		Object[] zeilen = { "ISBN", "Titel", "Genre_ID", "Verlag_ID", "Erscheinungsjahr", "Bestand" };
 		model = new DefaultTableModel(){
 
-		    /**
-			 * 
-			 */
 			//Einzelne Zellen koennen nicht mehr bearbeitet werden
 			private static final long serialVersionUID = 1L;
 
@@ -93,9 +90,11 @@ public class DeleteV2 {
 			@Override
 			public void actionPerformed(ActionEvent ev) {
 				int i = table.getSelectedRow();
-				if(i <= 0) {
+				String titel = table.getValueAt(i, 0).toString();
+				
+				if(i <= 0 && titel != null) {
 					try {
-						db.deleteBuch(table.getValueAt(i, 0).toString());
+						db.deleteBuch(titel);
 					}catch (Exception e) {
 						JOptionPane.showMessageDialog(deleteFrame, "Titel nicht vorhanden");
 						}
