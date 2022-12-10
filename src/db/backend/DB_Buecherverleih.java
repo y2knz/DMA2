@@ -53,6 +53,52 @@ public class DB_Buecherverleih {
 			}
 		}
 	}
+	
+	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String autorNachname2, String autorVorname2,  String genre, String verlag, String jahr, String bestand) {
+		String verlagID = "";
+		String autorID = "";
+		String autorID2 = "";
+		String genreID = getGenreID(genre);
+		if (isbnVorhanden(isbn)) {
+			System.out.println("Buch bereits vorhanden");
+		} else {
+			if(!verlagVorhanden(verlag)) {
+				verlagID = getVerlagID(verlag);
+			} else {
+				addVerlag(verlag);
+				verlagID = getVerlagID(verlag);
+			}
+			
+			if(!autorVorhanden(autorNachname)) {
+				autorID = getAutorID(autorNachname);
+			} else {
+				addAutor(autorNachname, autorVorname);
+				autorID = getAutorID(autorNachname);
+			}
+			
+			if(!autorVorhanden(autorNachname2)) {
+				autorID2 = getAutorID(autorNachname2);
+			} else {
+				addAutor(autorNachname, autorVorname2);
+				autorID2 = getAutorID(autorNachname2);
+			}
+		
+			try {
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
+						"INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
+								+ "VALUES (?, ?, " + genreID + ", " + verlagID + ", ?, ?);"));
+				dbz.setString(isbn);
+				dbz.setString(titel);
+				dbz.setString(jahr);
+				dbz.setString(bestand);
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.getPreparedStatement().close();
+				dbz.setCounter_Prepared(1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public void deleteBuch(String titel) {
 		try {
