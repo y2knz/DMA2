@@ -61,9 +61,9 @@ public class ReadAutor {
 		buecherTable.setBackground(Color.white);
 		buecherTable.setForeground(Color.black);
 
-		buecherTable.setSelectionBackground(Color.red);
 		buecherTable.setGridColor(Color.BLACK);
-		buecherTable.setSelectionForeground(Color.white);
+		buecherTable.setFocusable(false);
+		buecherTable.setRowSelectionAllowed(false);
 		buecherTable.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		buecherTable.setRowHeight(30);
 		buecherTable.setAutoCreateRowSorter(true);

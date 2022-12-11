@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import db.backend.DB_Buecherverleih;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class ReadGenre {
 
@@ -35,7 +36,7 @@ public class ReadGenre {
 
 		JTable buecherTable = new JTable();
 		// Richtige werte
-		Object[] zeilen = { "ISBN", "Titel", "Genre_ID", "Verlag_ID", "Erscheinungsjahr", "Bestand" };
+		Object[] zeilen = { "ISBN", "Titel", "Genre_ID", "Verlag_ID", "Erscheinungsjahr","Autor ","Bestand"};
 		model = new DefaultTableModel() {
 
 			// Einzelne Zellen koennen nicht mehr bearbeitet werden
@@ -48,7 +49,7 @@ public class ReadGenre {
 			}
 		};
 
-		reihe = new Object[6];
+		reihe = new Object[7];
 
 		readGFrame = new JFrame("Read Genre");
 		readGFrame.getContentPane().setBackground(new Color(221, 224, 229));
@@ -151,9 +152,14 @@ public class ReadGenre {
 	}
 
 	public void genreBuecherAnzeigen(ArrayList<LinkedHashMap<String, String>> genreBuecher) {
+		if(genreBuecher.isEmpty()) {
+			JOptionPane.showMessageDialog(readGFrame, "Momentan keine Bücher vorhanden");
+		}
 		for (int i = 0; i < genreBuecher.size(); i++) {
 
 			LinkedHashMap<String, String> buch = genreBuecher.get(i);
+			
+			
 
 			for (String key : buch.keySet()) {
 				System.out.println(key);
@@ -167,11 +173,11 @@ public class ReadGenre {
 					reihe[1] = buch.get(key);
 
 				}
-				if (key.equals("Genre_ID")) {
+				if (key.equals("Bezeichnung")) {
 					reihe[2] = buch.get(key);
 
 				}
-				if (key.equals("Verlag_ID")) {
+				if (key.equals("Name")) {
 					reihe[3] = buch.get(key);
 
 				}
@@ -179,8 +185,12 @@ public class ReadGenre {
 					reihe[4] = buch.get(key);
 
 				}
-				if (key.equals("Bestand")) {
+				if (key.equals("Autor")) {
 					reihe[5] = buch.get(key);
+
+				}
+				if (key.equals("Bestand")) {
+					reihe[6] = buch.get(key);
 
 					model.addRow(reihe);
 
