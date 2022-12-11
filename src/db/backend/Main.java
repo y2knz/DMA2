@@ -15,14 +15,14 @@ public class Main {
 		
 		//String ipAddress = "192.168.0.137";
 
-		String ipAddresse  = "192.168.0.137";
+		String ipAddresse  = "192.168.1.17";
 
 //		
 		db = new DB_Buecherverleih(new DB_Zugriff(ipAddresse));
 //
 
 //		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
-//		db.deleteBuch("Norden");
+		db.deleteBuch("Norden");
 
 		
 		

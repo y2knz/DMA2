@@ -36,8 +36,8 @@ public class CreateBuch {
 	private JTextField eingabeTitel = new JTextField(50);
 	private JTextField eingabeAutorNachname = new JTextField(30);
 	private JTextField eingabeAutorVorname = new JTextField(50);
-	private JTextField eingabeGenreID = new JTextField(5);
-	private JTextField eingabeVerlagID = new JTextField(5);
+	private JTextField eingabeGenre = new JTextField(5);
+	private JTextField eingabeVerlag = new JTextField(5);
 	private JTextField eingabeErscheinungsjahr = new JTextField(4);
 	private JTextField eingabeBestand = new JTextField(5);
 	private JLabel[] beschriftungen = new JLabel[8];
@@ -126,17 +126,17 @@ public class CreateBuch {
 				String titel = eingabeTitel.getText();
 				String autorNachname = eingabeAutorNachname.getText();
 				String autorVorname = eingabeAutorVorname.getText();
-				String genreid = Integer.toString(genreComboBox.getSelectedIndex()+1);
-				String verlagid = eingabeVerlagID.getText();
+				String genre = (String) genreComboBox.getSelectedItem();
+				String verlag = eingabeVerlag.getText();
 				String jahr = eingabeErscheinungsjahr.getText();
 				String bestand = eingabeBestand.getText();
-				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlagid.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
+				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlag.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
 					JOptionPane.showMessageDialog(jCreate, "Es sind nicht alle Felder ausgefüllt");
 				} else {
 					if(autorVorname.isEmpty()) {
 						autorVorname = "";
 					}
-					db.addBuch(isbn, titel, autorNachname, autorVorname, genreid, verlagid, jahr, bestand);
+					db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, bestand);
 				}
 			}
 		});
@@ -162,8 +162,8 @@ public class CreateBuch {
 		eingabePanel.add(eingabeAutorVorname);
 		eingabePanel.add(beschriftungen[4] = new JLabel("Genre:"));
 		eingabePanel.add(genreComboBox);
-		eingabePanel.add(beschriftungen[5] = new JLabel("VerlagID:"));
-		eingabePanel.add(eingabeVerlagID);
+		eingabePanel.add(beschriftungen[5] = new JLabel("Verlag:"));
+		eingabePanel.add(eingabeVerlag);
 		eingabePanel.add(beschriftungen[6] = new JLabel("Erscheinungsjahr:"));
 		eingabePanel.add(eingabeErscheinungsjahr);
 		eingabePanel.add(beschriftungen[7] = new JLabel("Bestand:"));
