@@ -18,27 +18,37 @@ public class DB_Buecherverleih {
 //	falls nichts eingegeben wird, einfahc leeren String übergeben
 	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String genre,
 			String verlag, String jahr, String bestand) {
-		String verlagID = "";
-		String autorID = "";
-		String genreID = getGenreID(genre);
-		if (isbnVorhanden(isbn)) {
-			System.out.println("Buch bereits vorhanden");
-		} else {
-			if (!verlagVorhanden(verlag)) {
-				verlagID = getVerlagID(verlag);
+		try {
+			dbz.getCon().setAutoCommit(false);
+			
+			String sql1, sql2, sql3;
+			String verlagID = "";
+			String autorID = "";
+			String genreID = getGenreID(genre);
+			if (isbnVorhanden(isbn)) {
+				System.out.println("Buch bereits vorhanden");
 			} else {
-				addVerlag(verlag);
-				verlagID = getVerlagID(verlag);
-			}
+				if (!verlagVorhanden(verlag)) {
+					verlagID = getVerlagID(verlag);
+				} else {
+					addVerlag(verlag);
+					verlagID = getVerlagID(verlag);
+				}
 
-			if (!autorVorhanden(autorNachname)) {
-				autorID = getAutorID(autorNachname);
-			} else {
-				addAutor(autorNachname, autorVorname);
-				autorID = getAutorID(autorNachname);
-			}
+				if (!autorVorhanden(autorNachname)) {
+					autorID = getAutorID(autorNachname);
+				} else {
+					addAutor(autorNachname, autorVorname);
+					autorID = getAutorID(autorNachname);
+//					TODO schreibt für
+					
+					sql1 = "INSERT INTO Schreibt_fuer (Autor_ID, Verlag_ID)"
+							+ "VALUES ("+ autorID + "," +verlagID+");";
+					dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql1));
+					dbz.getPreparedStatement().executeUpdate();
+					dbz.getPreparedStatement().close();	
+				}
 
-			try {
 				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
 						"INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
 								+ "VALUES (?, ?, " + genreID + ", " + verlagID + ", ?, ?);"));
@@ -49,10 +59,30 @@ public class DB_Buecherverleih {
 				dbz.getPreparedStatement().executeUpdate();
 				dbz.getPreparedStatement().close();
 				dbz.setCounter_Prepared(1);
-			} catch (SQLException e) {
-				e.printStackTrace();
+				
+				sql2 = "INSERT INTO Schreibt (Autor_ID, Buch_ISBN)" +
+						"Values (" +autorID+"," + "?);";
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql2));
+				dbz.setString(isbn);
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.getPreparedStatement().close();
+				dbz.setCounter_Prepared(1);	
+				
+				sql3 = "INSERT INTO Zugeordnet_zu (Buch_ISBN, Genre_ID)" +
+					"Values (?,"+ genreID +");";
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql3));
+				dbz.setString(isbn);
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.getPreparedStatement().close();
+				dbz.setCounter_Prepared(1);
+				
+				dbz.getCon().commit();
 			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
 	}
 
 	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String autorNachname2,
