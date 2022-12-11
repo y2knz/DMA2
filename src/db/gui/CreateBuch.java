@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -120,6 +121,8 @@ public class CreateBuch {
 		createButton = new JButton("Hinzufügen");
 		menueButton.setPreferredSize(new Dimension(140, 50));
 		createButton.addActionListener(new ActionListener() {
+			//ISBN Länge immer 13 und nur Zahlen
+			//Zweiter Autor (optional)
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String isbn = eingabeISBN.getText();
@@ -133,10 +136,21 @@ public class CreateBuch {
 				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlag.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
 					JOptionPane.showMessageDialog(jCreate, "Es sind nicht alle Felder ausgefüllt");
 				} else {
-					if(autorVorname.isEmpty()) {
-						autorVorname = "";
+					if(isbn.length() != 13) {
+						JOptionPane.showMessageDialog(jCreate, "Die ISBN muss 13 Stellen lang sein");
 					}
-					db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, bestand);
+					else {
+						   if (!Pattern.matches("^[0-9]*$", isbn))
+					        {
+								JOptionPane.showMessageDialog(jCreate, "Die ISBN darf nur aus Zahlen bestehen");
+					        }
+						   else {
+								if(autorVorname.isEmpty()) {
+									autorVorname = "";
+								}
+								db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, bestand);
+						   }
+					}
 				}
 			}
 		});
