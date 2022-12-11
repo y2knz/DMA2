@@ -16,27 +16,28 @@ public class DB_Buecherverleih {
 
 //	Verlag, Genre(dropdown) nicht als ID eingeben, Autor Vorname feld soll optional sein, 
 //	falls nichts eingegeben wird, einfahc leeren String übergeben
-	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String genre, String verlag, String jahr, String bestand) {
+	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String genre,
+			String verlag, String jahr, String bestand) {
 		String verlagID = "";
 		String autorID = "";
 		String genreID = getGenreID(genre);
 		if (isbnVorhanden(isbn)) {
 			System.out.println("Buch bereits vorhanden");
 		} else {
-			if(!verlagVorhanden(verlag)) {
+			if (!verlagVorhanden(verlag)) {
 				verlagID = getVerlagID(verlag);
 			} else {
 				addVerlag(verlag);
 				verlagID = getVerlagID(verlag);
 			}
-			
-			if(!autorVorhanden(autorNachname)) {
+
+			if (!autorVorhanden(autorNachname)) {
 				autorID = getAutorID(autorNachname);
 			} else {
 				addAutor(autorNachname, autorVorname);
 				autorID = getAutorID(autorNachname);
 			}
-		
+
 			try {
 				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
 						"INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
@@ -53,8 +54,9 @@ public class DB_Buecherverleih {
 			}
 		}
 	}
-	
-	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String autorNachname2, String autorVorname2,  String genre, String verlag, String jahr, String bestand) {
+
+	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String autorNachname2,
+			String autorVorname2, String genre, String verlag, String jahr, String bestand) {
 		String verlagID = "";
 		String autorID = "";
 		String autorID2 = "";
@@ -62,27 +64,27 @@ public class DB_Buecherverleih {
 		if (isbnVorhanden(isbn)) {
 			System.out.println("Buch bereits vorhanden");
 		} else {
-			if(!verlagVorhanden(verlag)) {
+			if (!verlagVorhanden(verlag)) {
 				verlagID = getVerlagID(verlag);
 			} else {
 				addVerlag(verlag);
 				verlagID = getVerlagID(verlag);
 			}
-			
-			if(!autorVorhanden(autorNachname)) {
+
+			if (!autorVorhanden(autorNachname)) {
 				autorID = getAutorID(autorNachname);
 			} else {
 				addAutor(autorNachname, autorVorname);
 				autorID = getAutorID(autorNachname);
 			}
-			
-			if(!autorVorhanden(autorNachname2)) {
+
+			if (!autorVorhanden(autorNachname2)) {
 				autorID2 = getAutorID(autorNachname2);
 			} else {
 				addAutor(autorNachname, autorVorname2);
 				autorID2 = getAutorID(autorNachname2);
 			}
-		
+
 			try {
 				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
 						"INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
@@ -117,11 +119,8 @@ public class DB_Buecherverleih {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 			dbz.setPreparedStatement(dbz.getCon()
-					.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel " 
-							+ "FROM Schreibt "
-							+ "JOIN Buch " 
-							+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
-							+ "JOIN Autor "
+					.prepareStatement("SELECT Autor.Nachname, Autor.Vorname, Buch.Titel " + "FROM Schreibt "
+							+ "JOIN Buch " + "ON Buch.ISBN = Schreibt.Buch_ISBN " + "JOIN Autor "
 							+ "ON Autor.ID = Schreibt.Autor_ID "
 							+ "WHERE Autor.ID IN(SELECT ID FROM Autor WHERE Nachname LIKE ?);"));
 			dbz.setString(s + "%");
@@ -140,8 +139,7 @@ public class DB_Buecherverleih {
 		try {
 			dbz.getCon().setAutoCommit(false);
 			dbz.setPreparedStatement(dbz.getCon().prepareStatement(
-					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" 
-							+ "VALUES (?, ?, ?, ?);"));
+					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" + "VALUES (?, ?, ?, ?);"));
 			dbz.setString(isbn);
 			dbz.setString(signatur);
 			dbz.setInt(sprache);
@@ -166,9 +164,7 @@ public class DB_Buecherverleih {
 		try {
 			dbz.getCon().setAutoCommit(false);
 			dbz.setPreparedStatement(
-					dbz.getCon().prepareStatement("DELETE FROM Exemplar " 
-							+ "WHERE ISBN=? " 
-							+ "AND Signatur=?;"));
+					dbz.getCon().prepareStatement("DELETE FROM Exemplar " + "WHERE ISBN=? " + "AND Signatur=?;"));
 			dbz.setString(isbn);
 			dbz.setString(signatur);
 			dbz.getPreparedStatement().executeUpdate();
@@ -176,9 +172,7 @@ public class DB_Buecherverleih {
 			dbz.setCounter_Prepared(1);
 
 			dbz.setPreparedStatement(
-					dbz.getCon().prepareStatement("UPDATE Buch " 
-							+ "SET Bestand =Bestand-1 " 
-							+ "WHERE ISBN=?"));
+					dbz.getCon().prepareStatement("UPDATE Buch " + "SET Bestand =Bestand-1 " + "WHERE ISBN=?"));
 			dbz.setString(isbn);
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
@@ -207,9 +201,7 @@ public class DB_Buecherverleih {
 	public void updateKundeEmail(String kundennr, String email) {
 		try {
 			dbz.setPreparedStatement(
-					dbz.getCon().prepareStatement("UPDATE Kunde " 
-							+ "SET E_Mail=? " 
-							+ "WHERE Kundennummer=?"));
+					dbz.getCon().prepareStatement("UPDATE Kunde " + "SET E_Mail=? " + "WHERE Kundennummer=?"));
 			dbz.setString(email);
 			dbz.setInt(kundennr);
 			dbz.getPreparedStatement().executeUpdate();
@@ -224,15 +216,9 @@ public class DB_Buecherverleih {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 			String sql = "SELECT Buch.ISBN, Buch.Titel, CONCAT(Autor.Nachname, ', ', Autor.Vorname) AS Autor, Genre.Bezeichnung, Verlag.Name, Buch.Erscheinungsjahr, Buch.Bestand "
-					+ "FROM Schreibt " 
-					+ "JOIN Buch " 
-					+ "ON Buch.ISBN = Schreibt.Buch_ISBN " 
-					+ "JOIN Autor "
-					+ "ON Autor.ID = Schreibt.Autor_ID " 
-					+ "JOIN Genre " 
-					+ "ON Genre.ID = Buch.Genre_ID "
-					+ "JOIN Verlag " 
-					+ "ON Buch.Verlag_ID = Verlag.ID "
+					+ "FROM Schreibt " + "JOIN Buch " + "ON Buch.ISBN = Schreibt.Buch_ISBN " + "JOIN Autor "
+					+ "ON Autor.ID = Schreibt.Autor_ID " + "JOIN Genre " + "ON Genre.ID = Buch.Genre_ID "
+					+ "JOIN Verlag " + "ON Buch.Verlag_ID = Verlag.ID "
 					+ "WHERE Buch.Genre_ID=(SELECT ID FROM Genre WHERE Bezeichnung=?);";
 			dbz.setSQL(sql);
 			dbz.setString(genre);
@@ -277,9 +263,7 @@ public class DB_Buecherverleih {
 	public ArrayList<LinkedHashMap<String, String>> showExemplar(String isbn, String Signatur) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-			String sql = "SELECT* FROM Exemplar "
-					+ "WHERE ISBN=? "
-					+ "AND Signatur=?";
+			String sql = "SELECT* FROM Exemplar " + "WHERE ISBN=? " + "AND Signatur=?";
 			dbz.setSQL(sql);
 			dbz.setString(isbn);
 			dbz.setString(Signatur);
@@ -297,8 +281,7 @@ public class DB_Buecherverleih {
 	public ArrayList<LinkedHashMap<String, String>> getGenre() {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
-			String sql = "SELECT Bezeichnung "
-					+ "FROM Genre";
+			String sql = "SELECT Bezeichnung " + "FROM Genre";
 			dbz.setSQL(sql);
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
@@ -314,9 +297,7 @@ public class DB_Buecherverleih {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		boolean istVorhanden;
 		try {
-			String sql = "SELECT ISBN "
-					+ "FROM Buch "
-					+ "WHERE ISBN=?";
+			String sql = "SELECT ISBN " + "FROM Buch " + "WHERE ISBN=?";
 			dbz.setSQL(sql);
 			dbz.setString(isbn);
 			liste = dbz.lesenJava();
@@ -336,9 +317,7 @@ public class DB_Buecherverleih {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		boolean istVorhanden;
 		try {
-			String sql = "SELECT Name " 
-					+ "FROM Verlag " 	
-					+ "WHERE Name=?;";
+			String sql = "SELECT Name " + "FROM Verlag " + "WHERE Name=?;";
 			dbz.setSQL(sql);
 			dbz.setString(verlag);
 			liste = dbz.lesenJava();
@@ -384,14 +363,12 @@ public class DB_Buecherverleih {
 //
 //		return istVorhanden;
 //	}
-	
+
 	public boolean autorVorhanden(String autorNachname) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		boolean istVorhanden;
 		try {
-			String sql = "SELECT Nachname " 
-					+ "FROM Autor " 
-					+ "WHERE Nachname=?;";
+			String sql = "SELECT Nachname " + "FROM Autor " + "WHERE Nachname=?;";
 			dbz.setSQL(sql);
 			dbz.setString(autorNachname);
 			liste = dbz.lesenJava();
@@ -409,14 +386,12 @@ public class DB_Buecherverleih {
 
 		return istVorhanden;
 	}
-	
+
 	public boolean genreVorhanden(String genre) {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		boolean istVorhanden;
 		try {
-			String sql = "SELECT ID " 
-					+ "FROM Genre " 
-					+ "WHERE Bezeichnung=?;";
+			String sql = "SELECT ID " + "FROM Genre " + "WHERE Bezeichnung=?;";
 			dbz.setSQL(sql);
 			dbz.setString(genre);
 			liste = dbz.lesenJava();
@@ -438,9 +413,7 @@ public class DB_Buecherverleih {
 	public String getVerlagID(String verlag) {
 		String verlagID = "";
 		try {
-			String sql = "SELECT ID " 
-					+ "FROM Verlag " 
-					+ "WHERE Name=?;";
+			String sql = "SELECT ID " + "FROM Verlag " + "WHERE Name=?;";
 			dbz.setSQL(sql);
 			dbz.setString(verlag);
 //			System.out.println(dbz.lesenJava());
@@ -452,13 +425,11 @@ public class DB_Buecherverleih {
 		}
 		return verlagID;
 	}
-	
+
 	public void addVerlag(String name) {
-		if(!verlagVorhanden(name)) {
+		if (!verlagVorhanden(name)) {
 			try {
-				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
-						"INSERT INTO Verlag(Name) "
-								+ "VALUES(?);"));
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement("INSERT INTO Verlag(Name) " + "VALUES(?);"));
 				dbz.setString(name);
 				dbz.getPreparedStatement().executeUpdate();
 				dbz.getPreparedStatement().close();
@@ -468,13 +439,11 @@ public class DB_Buecherverleih {
 			}
 		}
 	}
-	
+
 	public String getAutorID(String autor) {
 		String autorID = "";
 		try {
-			String sql = "SELECT ID " 
-					+ "FROM Autor " 
-					+ "WHERE Nachname=?;";
+			String sql = "SELECT ID " + "FROM Autor " + "WHERE Nachname=?;";
 			dbz.setSQL(sql);
 			dbz.setString(autor);
 			System.out.println(dbz.lesenJava());
@@ -486,13 +455,12 @@ public class DB_Buecherverleih {
 		}
 		return autorID;
 	}
-	
+
 	public void addAutor(String nachname, String vorname) {
-		if(!verlagVorhanden(nachname)) {
+		if (!verlagVorhanden(nachname)) {
 			try {
-				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
-						"INSERT INTO Autor(Nachname, Vorname) "
-								+ "VALUES(?, ?);"));
+				dbz.setPreparedStatement(
+						dbz.getCon().prepareStatement("INSERT INTO Autor(Nachname, Vorname) " + "VALUES(?, ?);"));
 				dbz.setString(nachname);
 				dbz.setString(vorname);
 				dbz.getPreparedStatement().executeUpdate();
@@ -503,13 +471,11 @@ public class DB_Buecherverleih {
 			}
 		}
 	}
-	
+
 	public String getGenreID(String genre) {
 		String autorID = "";
 		try {
-			String sql = "SELECT ID " 
-					+ "FROM Genre " 
-					+ "WHERE Bezeichnung=?;";
+			String sql = "SELECT ID " + "FROM Genre " + "WHERE Bezeichnung=?;";
 			dbz.setSQL(sql);
 			dbz.setString(genre);
 			System.out.println(dbz.lesenJava());
@@ -521,15 +487,14 @@ public class DB_Buecherverleih {
 		}
 		return autorID;
 	}
-	
+
 //	Funktioniert nicht: haben als Bezeichnung Enum... sollen wir noch weitere hinzufügen lassen?
 //	TODO falls nicht benötigt, andere Genre Methoden löschen
 	public void addGenre(String genre) {
-		if(!genreVorhanden(genre)) {
+		if (!genreVorhanden(genre)) {
 			try {
-				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
-						"INSERT INTO Genre(Bezeichnung) "
-								+ "VALUES(?);"));
+				dbz.setPreparedStatement(
+						dbz.getCon().prepareStatement("INSERT INTO Genre(Bezeichnung) " + "VALUES(?);"));
 				dbz.setString(genre);
 				dbz.getPreparedStatement().executeUpdate();
 				dbz.getPreparedStatement().close();
@@ -539,17 +504,9 @@ public class DB_Buecherverleih {
 			}
 		}
 	}
-	
+
 	// Methode nur temporaer
 	public void close() {
 		dbz.close();
 	}
 }
-
-
-
-
-
-
-
-

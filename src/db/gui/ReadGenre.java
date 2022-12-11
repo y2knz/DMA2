@@ -84,8 +84,6 @@ public class ReadGenre {
 
 			LinkedHashMap<String, String> genreSchluessel = db.getGenre().get(i);
 
-			System.out.println(genreSchluessel.keySet());
-
 			genre.add(genreSchluessel.get("Bezeichnung"));
 			System.out.println(genreSchluessel.get("Bezeichnung"));
 
@@ -152,15 +150,15 @@ public class ReadGenre {
 		return readGFrame;
 	}
 
-	public void genreBuecherAnzeigen(ArrayList<LinkedHashMap<String, String>> buecher) {
-		for (int i = 0; i < db.getBuecher().size(); i++) {
+	public void genreBuecherAnzeigen(ArrayList<LinkedHashMap<String, String>> genreBuecher) {
+		for (int i = 0; i < genreBuecher.size(); i++) {
 
-			LinkedHashMap<String, String> buch = buecher.get(i);
+			LinkedHashMap<String, String> buch = genreBuecher.get(i);
 
 			for (String key : buch.keySet()) {
+				System.out.println(key);
 
 				if (key.equals("ISBN")) {
-					System.out.println(buch.get(key));
 
 					reihe[0] = buch.get(key);
 

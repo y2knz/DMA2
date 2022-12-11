@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,7 +33,7 @@ public class ReadAutor {
 
 		JTable buecherTable = new JTable();
 		// Richtige werte
-		Object[] zeilen = { "ISBN", "Titel", "Genre_ID", "Verlag_ID", "Erscheinungsjahr", "Bestand" };
+		Object[] zeilen = { "Titel", "Vorname", "Nachname" };
 		model = new DefaultTableModel() {
 
 			// Einzelne Zellen koennen nicht mehr bearbeitet werden
@@ -46,7 +46,7 @@ public class ReadAutor {
 			}
 		};
 
-		reihe = new Object[6];
+		reihe = new Object[3];
 
 		readAutorFrame = new JFrame("Read Autor");
 		readAutorFrame.getContentPane().setBackground(new Color(221, 224, 229));
@@ -74,7 +74,10 @@ public class ReadAutor {
 		pane.setBounds(283, 89, 932, 584);
 		readAutorFrame.getContentPane().add(pane);
 
-		String[] test = { "lorem,", "ipsum", "etc" };
+		autorTextField = new JTextField();
+		autorTextField.setBounds(26, 150, 164, 47);
+		readAutorFrame.getContentPane().add(autorTextField);
+		autorTextField.setColumns(10);
 
 		JButton menueButton = new JButton("Menü");
 		menueButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -103,21 +106,23 @@ public class ReadAutor {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String autor = autorLabel.getText();
+				model.setRowCount(0);
+				String autor = autorTextField.getText();
+				System.out.println(autor);
 				if (autor == null) {
 					JOptionPane.showMessageDialog(readAutorFrame, "Feld ausfüllen");
 				} else {
-
-					// TODO Methode
-					
 					ArrayList<LinkedHashMap<String, String>> autorBuecher = db.getBuecherVonAutor(autor);
-					
-					System.out.println(autorBuecher.toString());
+
+					System.out.println(autorBuecher.toString() + "1");
+
 					if (autorBuecher.isEmpty()) {
 						JOptionPane.showMessageDialog(readAutorFrame, "Autor nicht vorhanden");
 					} else {
-						model.setRowCount(0);
+
 						autorBuecherAnzeigen(autorBuecher);
+						buecherTable.revalidate();
+						buecherTable.repaint();
 
 					}
 				}
@@ -125,11 +130,6 @@ public class ReadAutor {
 			}
 		});
 		readAutorFrame.getContentPane().add(auswaehlenButton);
-
-		autorTextField = new JTextField();
-		autorTextField.setBounds(26, 150, 164, 47);
-		readAutorFrame.getContentPane().add(autorTextField);
-		autorTextField.setColumns(10);
 
 		readAutorFrame.revalidate();
 
@@ -145,39 +145,24 @@ public class ReadAutor {
 	}
 
 	public void autorBuecherAnzeigen(ArrayList<LinkedHashMap<String, String>> autorBuecher) {
-		for (int i = 0; i < db.getBuecher().size(); i++) {
+		for (int i = 0; i < autorBuecher.size(); i++) {
 
 			LinkedHashMap<String, String> buch = autorBuecher.get(i);
 
 			for (String key : buch.keySet()) {
 
-				if (key.equals("ISBN")) {
-					System.out.println(buch.get(key));
+				if (key.equals("Titel")) {
 
 					reihe[0] = buch.get(key);
 
 				}
-				if (key.equals("Titel")) {
+				if (key.equals("Vorname")) {
 					reihe[1] = buch.get(key);
 
 				}
-				if (key.equals("Genre_ID")) {
+				if (key.equals("Nachname")) {
 					reihe[2] = buch.get(key);
-
-				}
-				if (key.equals("Verlag_ID")) {
-					reihe[3] = buch.get(key);
-
-				}
-				if (key.equals("Erscheinungsjahr")) {
-					reihe[4] = buch.get(key);
-
-				}
-				if (key.equals("Bestand")) {
-					reihe[5] = buch.get(key);
-
 					model.addRow(reihe);
-
 				}
 
 			}
