@@ -21,8 +21,11 @@ public class Main {
 		db = new DB_Buecherverleih(new DB_Zugriff(ipAddresse));
 //
 
-		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
-//		db.deleteBuch("Norden");
+//		db.addBuch("9783662567760", "Data Science - Was ist das eigentlich?!", "Ng", "Annalyn",  "Soo", "Kenneth", "Sachbuch", "Springer", "2018", "1");
+//		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
+
+		
+		//		db.deleteBuch("Norden");
 
 		
 		

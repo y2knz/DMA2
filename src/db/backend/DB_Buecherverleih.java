@@ -28,19 +28,18 @@ public class DB_Buecherverleih {
 			if (isbnVorhanden(isbn)) {
 				System.out.println("Buch bereits vorhanden");
 			} else {
-				if (!verlagVorhanden(verlag)) {
+				if (verlagVorhanden(verlag)) {
 					verlagID = getVerlagID(verlag);
 				} else {
 					addVerlag(verlag);
 					verlagID = getVerlagID(verlag);
 				}
 
-				if (!autorVorhanden(autorNachname)) {
+				if (autorVorhanden(autorNachname)) {
 					autorID = getAutorID(autorNachname);
 				} else {
 					addAutor(autorNachname, autorVorname);
 					autorID = getAutorID(autorNachname);
-//					TODO schreibt für
 					
 					sql1 = "INSERT INTO Schreibt_fuer (Autor_ID, Verlag_ID)"
 							+ "VALUES ("+ autorID + "," +verlagID+");";
@@ -85,37 +84,52 @@ public class DB_Buecherverleih {
 		
 	}
 
-	public void addBuch(String isbn, String titel, String autorNachname, String autorVorname, String autorNachname2,
+	public void addBuch(String isbn, String titel, String autorNachname1, String autorVorname1, String autorNachname2,
 			String autorVorname2, String genre, String verlag, String jahr, String bestand) {
-		String verlagID = "";
-		String autorID = "";
-		String autorID2 = "";
-		String genreID = getGenreID(genre);
-		if (isbnVorhanden(isbn)) {
-			System.out.println("Buch bereits vorhanden");
-		} else {
-			if (!verlagVorhanden(verlag)) {
-				verlagID = getVerlagID(verlag);
+		try {
+			dbz.getCon().setAutoCommit(false);
+			
+			String sql1, sql2, sql3, sql4;
+			String verlagID = "";
+			String autorID1 = "";
+			String autorID2 = "";
+			String genreID = getGenreID(genre);
+			if (isbnVorhanden(isbn)) {
+				System.out.println("Buch bereits vorhanden");
 			} else {
-				addVerlag(verlag);
-				verlagID = getVerlagID(verlag);
-			}
+				if (verlagVorhanden(verlag)) {
+					verlagID = getVerlagID(verlag);
+				} else {
+					addVerlag(verlag);
+					verlagID = getVerlagID(verlag);
+				}
 
-			if (!autorVorhanden(autorNachname)) {
-				autorID = getAutorID(autorNachname);
-			} else {
-				addAutor(autorNachname, autorVorname);
-				autorID = getAutorID(autorNachname);
-			}
+				if (autorVorhanden(autorNachname1)) {
+					autorID1 = getAutorID(autorNachname1);
+				} else {
+					addAutor(autorNachname1, autorVorname1);
+					autorID1 = getAutorID(autorNachname1);
 
-			if (!autorVorhanden(autorNachname2)) {
-				autorID2 = getAutorID(autorNachname2);
-			} else {
-				addAutor(autorNachname, autorVorname2);
-				autorID2 = getAutorID(autorNachname2);
-			}
+					sql1 = "INSERT INTO Schreibt_fuer (Autor_ID, Verlag_ID)"
+							+ "VALUES ("+ autorID1 + "," +verlagID+");";
+					dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql1));
+					dbz.getPreparedStatement().executeUpdate();
+					dbz.getPreparedStatement().close();	
+				}
+				
+				if (autorVorhanden(autorNachname2)) {
+					autorID2 = getAutorID(autorNachname2);
+				} else {
+					addAutor(autorNachname2, autorVorname2);
+					autorID2 = getAutorID(autorNachname2);
+					
+					sql1 = "INSERT INTO Schreibt_fuer (Autor_ID, Verlag_ID)"
+							+ "VALUES ("+ autorID2 + "," +verlagID+");";
+					dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql1));
+					dbz.getPreparedStatement().executeUpdate();
+					dbz.getPreparedStatement().close();	
+				}
 
-			try {
 				dbz.setPreparedStatement(dbz.getCon().prepareStatement(
 						"INSERT INTO Buch(ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand)"
 								+ "VALUES (?, ?, " + genreID + ", " + verlagID + ", ?, ?);"));
@@ -126,10 +140,38 @@ public class DB_Buecherverleih {
 				dbz.getPreparedStatement().executeUpdate();
 				dbz.getPreparedStatement().close();
 				dbz.setCounter_Prepared(1);
-			} catch (SQLException e) {
-				e.printStackTrace();
+				
+				sql2 = "INSERT INTO Schreibt (Autor_ID, Buch_ISBN)" +
+						"Values (" +autorID1+"," + "?);";
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql2));
+				dbz.setString(isbn);
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.getPreparedStatement().close();
+				dbz.setCounter_Prepared(1);	
+				
+				sql3 = "INSERT INTO Schreibt (Autor_ID, Buch_ISBN)" +
+						"Values (" +autorID2+"," + "?);";
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql3));
+				dbz.setString(isbn);
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.getPreparedStatement().close();
+				dbz.setCounter_Prepared(1);	
+				
+				sql4 = "INSERT INTO Zugeordnet_zu (Buch_ISBN, Genre_ID)" +
+					"Values (?,"+ genreID +");";
+				dbz.setPreparedStatement(dbz.getCon().prepareStatement(sql4));
+				dbz.setString(isbn);
+				dbz.getPreparedStatement().executeUpdate();
+				dbz.getPreparedStatement().close();
+				dbz.setCounter_Prepared(1);
+				
+				dbz.getCon().commit();
 			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
 	}
 
 	public void deleteBuch(String titel) {
@@ -353,15 +395,17 @@ public class DB_Buecherverleih {
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-			System.out.println(liste);
+			System.out.println("verlagVorhanden Methode "+liste);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		if (liste.size() > 0) {
 			istVorhanden = true;
-		} else
+		} else {
 			istVorhanden = false;
+		}
 
+		System.out.println("VerlagVorhanden " + istVorhanden);
 		return istVorhanden;
 	}
 
@@ -411,32 +455,11 @@ public class DB_Buecherverleih {
 
 		if (liste.size() > 0) {
 			istVorhanden = true;
-		} else
+		} else {
 			istVorhanden = false;
-
-		return istVorhanden;
-	}
-
-	public boolean genreVorhanden(String genre) {
-		ArrayList<LinkedHashMap<String, String>> liste = null;
-		boolean istVorhanden;
-		try {
-			String sql = "SELECT ID " + "FROM Genre " + "WHERE Bezeichnung=?;";
-			dbz.setSQL(sql);
-			dbz.setString(genre);
-			liste = dbz.lesenJava();
-			dbz.getPreparedStatement().close();
-			dbz.setCounter_Prepared(1);
-			System.out.println(liste);
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 
-		if (liste.size() > 0) {
-			istVorhanden = true;
-		} else
-			istVorhanden = false;
-
+		System.out.println("Autor istVorhanden " + istVorhanden); 
 		return istVorhanden;
 	}
 
@@ -518,22 +541,6 @@ public class DB_Buecherverleih {
 		return autorID;
 	}
 
-//	Funktioniert nicht: haben als Bezeichnung Enum... sollen wir noch weitere hinzufügen lassen?
-//	TODO falls nicht benötigt, andere Genre Methoden löschen
-	public void addGenre(String genre) {
-		if (!genreVorhanden(genre)) {
-			try {
-				dbz.setPreparedStatement(
-						dbz.getCon().prepareStatement("INSERT INTO Genre(Bezeichnung) " + "VALUES(?);"));
-				dbz.setString(genre);
-				dbz.getPreparedStatement().executeUpdate();
-				dbz.getPreparedStatement().close();
-				dbz.setCounter_Prepared(1);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	// Methode nur temporaer
 	public void close() {
