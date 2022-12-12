@@ -96,7 +96,7 @@ public class DeleteV2 {
 				
 				System.out.println(i);
 				
-				if(i <= 0 && titel != null) {
+				if(i >= 0 && titel != null) {
 					try {
 						db.deleteBuch(titel);
 					}catch (Exception e) {
@@ -139,17 +139,20 @@ public class DeleteV2 {
 	}
 
 	public void buecherAnzeigenV2() {
+		
+		System.out.println(db.getBuecher().toString());
 
 		// ISBN, Titel, Genre_ID, Verlag_ID, Erscheinungsjahr, Bestand
 		for (int i = 0; i < db.getBuecher().size(); i++) {
 
 			LinkedHashMap<String, String> buch = db.getBuecher().get(i);
+			
 
 			for (String key : buch.keySet()) {
-				System.out.println(key);
+//				System.out.println(key);
 
 				if (key.equals("ISBN")) {
-					System.out.println(buch.get(key));
+//					System.out.println(buch.get(key));
 
 					reihe[0] = buch.get(key);
 
