@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-public class Main {
+public class BackendMain {
 
 	static DB_Buecherverleih db = null;
 	
@@ -22,10 +22,10 @@ public class Main {
 //
 
 //		db.addBuch("9783662567760", "Data Science - Was ist das eigentlich?!", "Ng", "Annalyn",  "Soo", "Kenneth", "Sachbuch", "Springer", "2018", "1");
-//		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
+		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
 
 		
-		//		db.deleteBuch("Norden");
+//		db.deleteBuch("Norden");
 
 		
 		
