@@ -151,22 +151,15 @@ public class ReadAutor {
 
 			for (String key : buch.keySet()) {
 
-				if (key.equals("Titel")) {
-
-					reihe[0] = buch.get(key);
-
-				}
-				if (key.equals("Vorname")) {
-					reihe[1] = buch.get(key);
-
-				}
 				if (key.equals("Nachname")) {
 					reihe[2] = buch.get(key);
+				}else if (key.equals("Vorname")) {
+					reihe[1] = buch.get(key);
+				} else if (key.equals("Titel")) {
+					reihe[0] = buch.get(key);
 					model.addRow(reihe);
 				}
-
 			}
-
 		}
 	}
 }
