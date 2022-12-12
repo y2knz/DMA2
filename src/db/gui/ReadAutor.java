@@ -119,6 +119,8 @@ public class ReadAutor {
 					if (autorBuecher.isEmpty()) {
 						JOptionPane.showMessageDialog(readAutorFrame, "Autor nicht vorhanden");
 					} else {
+						model.fireTableDataChanged();
+						buecherTable.repaint();
 
 						autorBuecherAnzeigen(autorBuecher);
 						buecherTable.revalidate();
