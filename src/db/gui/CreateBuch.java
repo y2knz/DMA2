@@ -51,7 +51,7 @@ public class CreateBuch {
 		EventHandlerCreate ed = new EventHandlerCreate(this, db);
 
 		this.db = db;
-		jCreate = new JFrame("Datenbank Delete");
+		jCreate = new JFrame("Create Buch");
 		jCreate.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jCreate.setSize(1280, 720);
 		jCreate.setResizable(false);
