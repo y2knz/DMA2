@@ -3,6 +3,8 @@ package db.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import db.backend.DB_Buecherverleih;
 import db.backend.DB_Zugriff;
 
@@ -36,9 +38,6 @@ public class EventHandlerMenue implements ActionListener {
 		if (m.getOptionen()[1]== source) {
 			
 			m.getjMenue().dispose();
-//			DeleteBuch d = new DeleteBuch(db);
-//			
-//			d.getDeleteMain().setVisible(true);
 			DeleteV2 d2 = new DeleteV2(db);
 			d2.getDeleteFrame().setVisible(true);
 
@@ -56,6 +55,8 @@ public class EventHandlerMenue implements ActionListener {
 			
 
 		}if (m.getOptionen()[5]== source) {
+			
+			JOptionPane.showMessageDialog(null, "Team A2:\nNiels\nNicole\nRodez\nHendrik\nNiklas");
 
 		}
 		

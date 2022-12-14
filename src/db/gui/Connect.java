@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URLConnection;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -70,26 +71,27 @@ public class Connect {
 		verbindenButton = new JButton("Verbinden");
 
 		verbindenButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String ip = ipAdresseField.getText();
-				
-				
+
 				try {
 
 					db = new DB_Buecherverleih(new DB_Zugriff(ip));
 
 					Menue m = new Menue(db);
-					
+
 					jConnect.dispose();
 
 					m.getjMenue().setVisible(true);
 
+					
+
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null,"ungültige Eingabe");
+					JOptionPane.showMessageDialog(null, "ungültige Eingabe");
 				}
-				
+
 			}
 		});
 
