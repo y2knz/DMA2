@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import db.backend.DB_Buecherverleih;
 import db.backend.DB_Zugriff;
@@ -31,7 +32,7 @@ public class Connect {
 	public Connect() {
 		jConnect = new JFrame("Datenbank Menue");
 		jConnect.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jConnect.setSize(1280, 720);
+		jConnect.setSize(600, 400);
 		jConnect.setResizable(false);
 		jConnect.setBackground(new Color(37, 40, 80));
 
@@ -70,12 +71,14 @@ public class Connect {
 
 		verbindenButton = new JButton("Verbinden");
 
-		verbindenButton.addActionListener(new ActionListener() {
 
+		  
+		  verbindenButton.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				String ip = ipAdresseField.getText();
-
 				try {
 
 					db = new DB_Buecherverleih(new DB_Zugriff(ip));
@@ -86,14 +89,37 @@ public class Connect {
 
 					m.getjMenue().setVisible(true);
 
-					
-
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "ungültige Eingabe");
 				}
-
+				
+				
 			}
 		});
+		
+//TODO 
+//		verbindenButton.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				String ip = ipAdresseField.getText();
+//
+//				try {
+//
+//					db = new DB_Buecherverleih(new DB_Zugriff(ip));
+//
+//					Menue m = new Menue(db);
+//
+//					jConnect.dispose();
+//
+//					m.getjMenue().setVisible(true);
+//
+//				} catch (Exception e2) {
+//					JOptionPane.showMessageDialog(null, "ungültige Eingabe");
+//				}
+//
+//			}
+//		});
 
 		buttonPanel.add(verbindenButton);
 
