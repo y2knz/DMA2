@@ -42,6 +42,10 @@ public class EventHandlerMenue implements ActionListener {
 			d2.getDeleteFrame().setVisible(true);
 
 		}if (m.getOptionen()[2]== source) {
+			
+			m.getjMenue().dispose();
+			UpdateBestand u = new UpdateBestand(db);
+			u.getUpdateFrame().setVisible(true);
 
 		}if (m.getOptionen()[3]== source) {
 			m.getjMenue().dispose();
@@ -56,7 +60,7 @@ public class EventHandlerMenue implements ActionListener {
 
 		}if (m.getOptionen()[5]== source) {
 			
-			JOptionPane.showMessageDialog(null, "Team A2:\nNiels\nNicole\nRodez\nHendrik\nNiklas");
+			JOptionPane.showMessageDialog(null, "Team A2:\nNiels Kochert\nNicole Shiner\nRodez Tazo\nHendrik Tesch\nNiklas Zoz");
 
 		}
 		

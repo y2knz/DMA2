@@ -59,6 +59,7 @@ public class ReadGenre {
 		readGFrame.getContentPane().setLayout(null);
 		readGFrame.setLocationRelativeTo(null);
 		model.setColumnIdentifiers(zeilen);
+		
 
 		buecherTable.setModel(model);
 		buecherTable.setBackground(Color.white);
@@ -141,10 +142,6 @@ public class ReadGenre {
 		readGFrame.revalidate();
 
 		readGFrame.setVisible(true);
-
-		readGFrame.revalidate();
-		readGFrame.setVisible(true);
-
 	}
 
 	public JFrame getReadGFrame() {

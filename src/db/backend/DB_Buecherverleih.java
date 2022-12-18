@@ -207,22 +207,24 @@ public class DB_Buecherverleih {
 		return liste;
 	}
 
-	public void addExemplar(String isbn, String signatur, String sprache, String auflage) {
+	public void addExemplar(String isbn) {
 		try {
 			dbz.getCon().setAutoCommit(false);
-			dbz.setPreparedStatement(dbz.getCon().prepareStatement(
-					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" + "VALUES (?, ?, ?, ?);"));
-			dbz.setString(isbn);
-			dbz.setString(signatur);
-			dbz.setInt(sprache);
-			dbz.setInt(auflage);
-			dbz.getPreparedStatement().executeUpdate();
-			dbz.getPreparedStatement().close();
-			dbz.setCounter_Prepared(1);
+//			dbz.setPreparedStatement(dbz.getCon().prepareStatement(
+//					"INSERT INTO Exemplar(ISBN, Signatur, Sprache_ID, Auflage)" + "VALUES (?, ?, ?, ?);"));
+//			dbz.setString(isbn);
+//			dbz.setString(signatur);
+//			dbz.setInt(sprache);
+//			dbz.setInt(auflage);
+//			dbz.getPreparedStatement().executeUpdate();
+//			dbz.getPreparedStatement().close();
+//			dbz.setCounter_Prepared(1);
 
 			dbz.setPreparedStatement(
 					dbz.getCon().prepareStatement("UPDATE Buch " + "SET Bestand =Bestand+1 " + "WHERE ISBN=?"));
 			dbz.setString(isbn);
+			System.out.println(isbn);
+
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
@@ -231,16 +233,15 @@ public class DB_Buecherverleih {
 			e.printStackTrace();
 		}
 	}
-
-	public void deleteExemplar(String isbn, String signatur) {
+	public void deleteExemplar(String isbn) {
 		try {
 			dbz.getCon().setAutoCommit(false);
-			dbz.setPreparedStatement(
-					dbz.getCon().prepareStatement("DELETE FROM Exemplar " + "WHERE ISBN=? " + "AND Signatur=?;"));
-			dbz.setString(isbn);
-			dbz.setString(signatur);
-			dbz.getPreparedStatement().executeUpdate();
-			dbz.getPreparedStatement().close();
+//			dbz.setPreparedStatement(
+//					dbz.getCon().prepareStatement("DELETE FROM Exemplar " + "WHERE ISBN=? " + "AND Signatur=?;"));
+//			dbz.setString(isbn);
+//			dbz.setString(signatur);
+//			dbz.getPreparedStatement().executeUpdate();
+//			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 
 			dbz.setPreparedStatement(
@@ -322,6 +323,20 @@ public class DB_Buecherverleih {
 		ArrayList<LinkedHashMap<String, String>> liste = null;
 		try {
 			String sql = "SELECT * FROM Buch";
+			dbz.setSQL(sql);
+			liste = dbz.lesenJava();
+			dbz.getPreparedStatement().close();
+			dbz.setCounter_Prepared(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return liste;
+	}
+	
+	public ArrayList<LinkedHashMap<String, String>> getExemplare() {
+		ArrayList<LinkedHashMap<String, String>> liste = null;
+		try {
+			String sql = "SELECT * FROM Exemplar";
 			dbz.setSQL(sql);
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
