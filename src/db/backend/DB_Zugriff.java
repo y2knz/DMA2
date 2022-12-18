@@ -13,7 +13,6 @@ public class DB_Zugriff {
 	public DB_Zugriff(String ipAddress) {
 		zugangsdaten = new Zugangsdaten();
 		zugangsdaten.setIP(ipAddress);
-		DriverManager.setLoginTimeout(3);
 		try {
 			System.out.println("Connecting to database :" + ipAddress + ":3306");
 			con = DriverManager.getConnection(zugangsdaten.getUrl(), zugangsdaten.getBenutzer(),
@@ -86,7 +85,7 @@ public class DB_Zugriff {
 	}
 
 	public void setString(String s) {
-		try {
+		try { 
 			ps.setString(counter_prepared++, s);
 		} catch (Exception e) {
 			e.printStackTrace();
