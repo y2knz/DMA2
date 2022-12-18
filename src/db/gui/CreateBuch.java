@@ -32,7 +32,7 @@ public class CreateBuch {
 
 	private JButton menueButton;
 	private JButton createButton;
-	
+
 	private JTextField eingabeISBN = new JTextField(13);
 	private JTextField eingabeTitel = new JTextField(50);
 	private JTextField eingabeAutorNachname = new JTextField(30);
@@ -43,7 +43,6 @@ public class CreateBuch {
 	private JTextField eingabeVerlag = new JTextField(5);
 	private JTextField eingabeErscheinungsjahr = new JTextField(4);
 	private JLabel[] beschriftungen = new JLabel[10];
-
 
 	public CreateBuch(DB_Buecherverleih db) {
 
@@ -64,7 +63,7 @@ public class CreateBuch {
 
 		GridLayout eingabeLayout = new GridLayout(10, 2);
 		GridLayout bestaetigungLayout = new GridLayout(1, 1);
-		
+
 		JPanel eingabePanel = new JPanel();
 		JPanel bestaetigungPanel = new JPanel();
 
@@ -73,7 +72,6 @@ public class CreateBuch {
 
 		bestaetigungPanel.setPreferredSize(new Dimension(200, 150));
 		eingabePanel.setPreferredSize(new Dimension(800, 200));
-
 
 		// NorthPanel
 
@@ -87,15 +85,15 @@ public class CreateBuch {
 		northFillerPanel.setPreferredSize(new Dimension(1000, 50));
 		northFillerPanel.setOpaque(true);
 		northPanel.add(northFillerPanel);
-		
+
 		// Menu Button
 
 		menueButton = new JButton("Menü");
 		menueButton.setPreferredSize(new Dimension(140, 50));
 		menueButton.addActionListener(ed);
-		
+
 		// GENRE
-		
+
 		ArrayList<String> genre = new ArrayList<>();
 
 		for (int i = 0; i < db.getGenre().size(); i++) {
@@ -112,18 +110,18 @@ public class CreateBuch {
 		String[] genreArray = new String[genre.size()];
 
 		genreArray = genre.toArray(genreArray);
-		
+
 		JComboBox<String> genreComboBox = new JComboBox<String>(genreArray);
 		genreComboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		genreComboBox.setBounds(26, 152, 164, 47);
-		
+
 		// Create Button
-		
+
 		createButton = new JButton("Hinzufügen");
 		menueButton.setPreferredSize(new Dimension(140, 50));
 		createButton.addActionListener(new ActionListener() {
-			//ISBN Länge immer 13 und nur Zahlen
-			//Zweiter Autor (optional)
+			// ISBN Länge immer 13 und nur Zahlen
+			// Zweiter Autor (optional)
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String isbn = eingabeISBN.getText();
@@ -136,41 +134,57 @@ public class CreateBuch {
 				System.out.println(genre);
 				String verlag = eingabeVerlag.getText();
 				String jahr = eingabeErscheinungsjahr.getText();
-				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlag.isEmpty() || jahr.isEmpty()) {
+				if (isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlag.isEmpty()
+						|| jahr.isEmpty()) {
 					JOptionPane.showMessageDialog(jCreate, "Es sind nicht alle Felder ausgefüllt");
 				} else {
-					if(isbn.length() != 13) {
+					if (isbn.length() != 13) {
 						JOptionPane.showMessageDialog(jCreate, "Die ISBN muss 13 Stellen lang sein");
-					}
-					else {
-						   if (!Pattern.matches("^[0-9]*$", isbn) || !isbn.startsWith("978"))
-					        {
-								JOptionPane.showMessageDialog(jCreate, "Die ISBN darf nur aus Zahlen bestehen und muss mit 978 anfangen");
-					        } else if(!Pattern.matches("^[0-9]*$", isbn) || jahr.length() != 4) {
-								JOptionPane.showMessageDialog(jCreate, "Die Jahresangabe besteht aus 4 Zahlen");
-					        }
-						   else {
-								if(autorVorname.isEmpty()) {
-									autorVorname = "";
+					} else {
+						if (!Pattern.matches("^[0-9]*$", isbn) || !isbn.startsWith("978")) {
+							JOptionPane.showMessageDialog(jCreate,
+									"Die ISBN darf nur aus Zahlen bestehen und muss mit 978 anfangen");
+						} else if (!Pattern.matches("^[0-9]*$", isbn) || jahr.length() != 4) {
+							JOptionPane.showMessageDialog(jCreate, "Die Jahresangabe besteht aus 4 Zahlen");
+						} else {
+							if (autorVorname.isEmpty()) {
+								autorVorname = "";
+							}
+							if (autorVorname2.isEmpty()) {
+								autorVorname2 = "";
+							}
+							if (autorNachname2.isEmpty()) {
+								if (!db.autorVorhanden(autorNachname)) {
+									db.addAutor(autorNachname, autorVorname);
 								}
-								if(autorVorname2.isEmpty()) {
-									autorVorname2 = "";
+								if (!db.verlagVorhanden(verlag)) {
+									db.addVerlag(verlag);
 								}
-								if(autorNachname2.isEmpty()) {
-									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
-									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
-									db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, "1");
-									JOptionPane.showMessageDialog(jCreate, "Die Erstellung wurde durchgeführt");
+								db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, "1");
+								JOptionPane.showMessageDialog(jCreate, "Die Erstellung wurde durchgeführt");
+								getjCreate().dispose();
+								Menue m = new Menue(db);
+								m.getjMenue().setVisible(true);
 
-								} else {
-									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
-									if(!db.autorVorhanden(autorNachname2)) {db.addAutor(autorNachname2, autorVorname2);}
-									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
-									db.addBuch(isbn, titel, autorNachname, autorVorname, autorNachname2, autorVorname2, genre, verlag, jahr, "1");
-									JOptionPane.showMessageDialog(jCreate, "Die Erstellung wurde durchgeführt");
-
+							} else {
+								if (!db.autorVorhanden(autorNachname)) {
+									db.addAutor(autorNachname, autorVorname);
 								}
-						   }
+								if (!db.autorVorhanden(autorNachname2)) {
+									db.addAutor(autorNachname2, autorVorname2);
+								}
+								if (!db.verlagVorhanden(verlag)) {
+									db.addVerlag(verlag);
+								}
+								db.addBuch(isbn, titel, autorNachname, autorVorname, autorNachname2, autorVorname2,
+										genre, verlag, jahr, "1");
+								JOptionPane.showMessageDialog(jCreate, "Die Erstellung wurde durchgeführt");
+								getjCreate().dispose();
+								Menue m = new Menue(db);
+								m.getjMenue().setVisible(true);
+
+							}
+						}
 					}
 				}
 			}
@@ -183,10 +197,9 @@ public class CreateBuch {
 		createMain.add(bestaetigungPanel, BorderLayout.EAST);
 		jCreate.add(createMain);
 		jCreate.setVisible(true);
-		
-		
+
 		// Eingabefelder
-		
+
 		eingabePanel.add(beschriftungen[0] = new JLabel("ISBN:"));
 		eingabePanel.add(eingabeISBN);
 		eingabePanel.add(beschriftungen[1] = new JLabel("Titel:"));
