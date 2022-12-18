@@ -154,10 +154,17 @@ public class CreateBuch {
 								if(autorVorname.isEmpty()) {
 									autorVorname = "";
 								}
+								if(autorVorname2.isEmpty()) {
+									autorVorname2 = "";
+								}
 								if(autorNachname2.isEmpty()) {
-									if(db.autorVorhanden(autorNachname)) {}
+									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
+									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
 									db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, bestand);
 								} else {
+									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
+									if(!db.autorVorhanden(autorNachname2)) {db.addAutor(autorNachname2, autorVorname2);}
+									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
 									db.addBuch(isbn, titel, autorNachname, autorVorname, autorNachname2, autorVorname2, genre, verlag, jahr, bestand);
 								}
 						   }
