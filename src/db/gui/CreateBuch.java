@@ -134,6 +134,7 @@ public class CreateBuch {
 				String autorNachname2 = eingabeAutor2Nachname.getText();
 				String autorVorname2 = eingabeAutor2Vorname.getText();
 				String genre = (String) genreComboBox.getSelectedItem();
+				System.out.println(genre);
 				String verlag = eingabeVerlag.getText();
 				String jahr = eingabeErscheinungsjahr.getText();
 				String bestand = eingabeBestand.getText();
