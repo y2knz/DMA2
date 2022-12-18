@@ -148,14 +148,24 @@ public class CreateBuch {
 						   if (!Pattern.matches("^[0-9]*$", isbn) || !isbn.startsWith("978"))
 					        {
 								JOptionPane.showMessageDialog(jCreate, "Die ISBN darf nur aus Zahlen bestehen und muss mit 978 anfangen");
+					        } else if(!Pattern.matches("^[0-9]*$", isbn) || jahr.length() != 4) {
+								JOptionPane.showMessageDialog(jCreate, "Die Jahresangabe besteht aus 4 Zahlen");
 					        }
 						   else {
 								if(autorVorname.isEmpty()) {
 									autorVorname = "";
 								}
+								if(autorVorname2.isEmpty()) {
+									autorVorname2 = "";
+								}
 								if(autorNachname2.isEmpty()) {
+									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
+									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
 									db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, bestand);
 								} else {
+									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
+									if(!db.autorVorhanden(autorNachname2)) {db.addAutor(autorNachname2, autorVorname2);}
+									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
 									db.addBuch(isbn, titel, autorNachname, autorVorname, autorNachname2, autorVorname2, genre, verlag, jahr, bestand);
 								}
 						   }
