@@ -42,7 +42,6 @@ public class CreateBuch {
 	private JTextField eingabeGenre = new JTextField(5);
 	private JTextField eingabeVerlag = new JTextField(5);
 	private JTextField eingabeErscheinungsjahr = new JTextField(4);
-	private JTextField eingabeBestand = new JTextField(5);
 	private JLabel[] beschriftungen = new JLabel[10];
 
 
@@ -136,8 +135,7 @@ public class CreateBuch {
 				String genre = (String) genreComboBox.getSelectedItem();
 				String verlag = eingabeVerlag.getText();
 				String jahr = eingabeErscheinungsjahr.getText();
-				String bestand = eingabeBestand.getText();
-				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlag.isEmpty() || jahr.isEmpty() || bestand.isEmpty()) {
+				if(isbn.isEmpty() || titel.isEmpty() || autorNachname.isEmpty() || verlag.isEmpty() || jahr.isEmpty()) {
 					JOptionPane.showMessageDialog(jCreate, "Es sind nicht alle Felder ausgefüllt");
 				} else {
 					if(isbn.length() != 13) {
@@ -160,12 +158,16 @@ public class CreateBuch {
 								if(autorNachname2.isEmpty()) {
 									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
 									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
-									db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, bestand);
+									db.addBuch(isbn, titel, autorNachname, autorVorname, genre, verlag, jahr, "1");
+									JOptionPane.showMessageDialog(jCreate, "Die Erstellung wurde durchgeführt");
+
 								} else {
 									if(!db.autorVorhanden(autorNachname)) {db.addAutor(autorNachname, autorVorname);}
 									if(!db.autorVorhanden(autorNachname2)) {db.addAutor(autorNachname2, autorVorname2);}
 									if(!db.verlagVorhanden(verlag)) {db.addVerlag(verlag);}
-									db.addBuch(isbn, titel, autorNachname, autorVorname, autorNachname2, autorVorname2, genre, verlag, jahr, bestand);
+									db.addBuch(isbn, titel, autorNachname, autorVorname, autorNachname2, autorVorname2, genre, verlag, jahr, "1");
+									JOptionPane.showMessageDialog(jCreate, "Die Erstellung wurde durchgeführt");
+
 								}
 						   }
 					}
@@ -202,8 +204,6 @@ public class CreateBuch {
 		eingabePanel.add(eingabeVerlag);
 		eingabePanel.add(beschriftungen[8] = new JLabel("Erscheinungsjahr:"));
 		eingabePanel.add(eingabeErscheinungsjahr);
-		eingabePanel.add(beschriftungen[9] = new JLabel("Bestand:"));
-		eingabePanel.add(eingabeBestand);
 		bestaetigungPanel.add(createButton);
 	}
 
