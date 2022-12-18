@@ -145,9 +145,9 @@ public class CreateBuch {
 						JOptionPane.showMessageDialog(jCreate, "Die ISBN muss 13 Stellen lang sein");
 					}
 					else {
-						   if (!Pattern.matches("^[0-9]*$", isbn))
+						   if (!Pattern.matches("^[0-9]*$", isbn) || !isbn.startsWith("978"))
 					        {
-								JOptionPane.showMessageDialog(jCreate, "Die ISBN darf nur aus Zahlen bestehen");
+								JOptionPane.showMessageDialog(jCreate, "Die ISBN darf nur aus Zahlen bestehen und muss mit 978 anfangen");
 					        }
 						   else {
 								if(autorVorname.isEmpty()) {
