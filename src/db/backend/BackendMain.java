@@ -9,11 +9,9 @@ public class BackendMain {
 	static DB_Buecherverleih db = null;
 	
 	public static void main(String[] args) {
-		//Scanner sc = new Scanner(System.in);
-		//System.out.println("DB IP-Address: ");
-		//String ipAddresse = sc.next();
+
 		
-		//String ipAddress = "192.168.0.137";
+//		String ipAddresse = "1.1.1.1";
 
 		String ipAddresse  = "192.168.0.137";
 
@@ -22,7 +20,7 @@ public class BackendMain {
 //
 
 //		db.addBuch("9783662567760", "Data Science - Was ist das eigentlich?!", "Ng", "Annalyn",  "Soo", "Kenneth", "Sachbuch", "Springer", "2018", "1");
-		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
+//		db.addBuch("9783937507309", "Norden", "de Boer", "Hendrik", "Drama", "Carl Hanser", "1969", "1");
 
 		
 //		db.deleteBuch("Norden");
@@ -39,7 +37,6 @@ public class BackendMain {
 //		System.out.println(db.verlagVorhanden("Carl Hanser"));
 //		System.out.println(db.autorVorhanden("Orwel"));
 //		db.getBuecherVonAutor("Or");
-//	db.deleteBuch("Norden");
 //		db.addExemplar("9781596792500", "4 A 1530 4", "1", "2");
 //		db.deleteExemplar("9781596792500", "4 A 1530 3");
 //		db.updateKundeEmail("1", "Mustermann@mm.de");
