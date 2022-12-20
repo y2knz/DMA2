@@ -77,9 +77,15 @@ public class DB_Buecherverleih {
 				
 				dbz.getCon().commit();
 			}
-		} catch (SQLException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			try {
+				dbz.getCon().rollback();
+				dbz.getCon().setAutoCommit(true);
+			} catch (Exception e2){
+				e2.printStackTrace();
+			}
 		}
 		
 	}
@@ -167,9 +173,15 @@ public class DB_Buecherverleih {
 				
 				dbz.getCon().commit();
 			}
-		} catch (SQLException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			try {
+				dbz.getCon().rollback();
+				dbz.getCon().setAutoCommit(true);
+			} catch (Exception e2){
+				e2.printStackTrace();
+			}
 		}
 		
 	}
@@ -182,7 +194,7 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -201,7 +213,7 @@ public class DB_Buecherverleih {
 			System.out.println(liste);
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
@@ -229,8 +241,14 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 			dbz.getCon().commit();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				dbz.getCon().rollback();
+				dbz.getCon().setAutoCommit(true);
+			} catch (Exception e2){
+				e2.printStackTrace();
+			}
 		}
 	}
 	public void deleteExemplar(String isbn) {
@@ -251,8 +269,14 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 			dbz.getCon().commit();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			try {
+				dbz.getCon().rollback();
+				dbz.getCon().setAutoCommit(true);
+			} catch (Exception e2){
+				e2.printStackTrace();
+			}
 		}
 	}
 
@@ -265,7 +289,7 @@ public class DB_Buecherverleih {
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
@@ -280,7 +304,7 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().executeUpdate();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -298,7 +322,7 @@ public class DB_Buecherverleih {
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(liste);
@@ -314,7 +338,7 @@ public class DB_Buecherverleih {
 			System.out.println(dbz.lesenJava());
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -327,7 +351,7 @@ public class DB_Buecherverleih {
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
@@ -341,7 +365,7 @@ public class DB_Buecherverleih {
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
@@ -358,7 +382,7 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
@@ -374,7 +398,7 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return liste;
@@ -390,7 +414,7 @@ public class DB_Buecherverleih {
 			liste = dbz.lesenJava();
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (liste.size() > 0) {
@@ -411,7 +435,7 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 			System.out.println("verlagVorhanden Methode "+liste);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (liste.size() > 0) {
@@ -464,7 +488,7 @@ public class DB_Buecherverleih {
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
 			System.out.println(liste);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -488,7 +512,7 @@ public class DB_Buecherverleih {
 			verlagID = dbz.lesenJava().get(0).get("ID");
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return verlagID;
@@ -502,7 +526,7 @@ public class DB_Buecherverleih {
 				dbz.getPreparedStatement().executeUpdate();
 				dbz.getPreparedStatement().close();
 				dbz.setCounter_Prepared(1);
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -518,7 +542,7 @@ public class DB_Buecherverleih {
 			autorID = dbz.lesenJava().get(0).get("ID");
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return autorID;
@@ -534,7 +558,7 @@ public class DB_Buecherverleih {
 				dbz.getPreparedStatement().executeUpdate();
 				dbz.getPreparedStatement().close();
 				dbz.setCounter_Prepared(1);
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -550,7 +574,7 @@ public class DB_Buecherverleih {
 			autorID = dbz.lesenJava().get(0).get("ID");
 			dbz.getPreparedStatement().close();
 			dbz.setCounter_Prepared(1);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return autorID;
